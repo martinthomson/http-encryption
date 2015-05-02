@@ -1,0 +1,1080 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Encrypted Content-Encoding for HTTP</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+<style type="text/css">
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+
+body {
+  font: 11pt cambria, helvetica, arial, sans-serif;
+  font-size-adjust: 0.5;
+  line-height: 130%;
+  margin: 1em auto;
+  max-width: 700px;
+}
+
+.title, .filename, h1, h2, h3, h4 {
+  font-family: candara, helvetica, arial, sans-serif;
+  font-size-adjust: 0.5;
+}
+.title { font-size: 150%; }
+h1 { font-size: 130%; }
+h2 { font-size: 120%; }
+h3, h4 { font-size: 110%; }
+ul.toc >li { font-size: 95%; }
+ul.toc >li >ul, .figure, caption { font-size: 90%; }
+
+table {
+  margin-left: 0em;
+}
+table.header {
+  width: 100%;
+}
+
+table.header td {
+  background-color: inherit;
+  color: black;
+}
+
+samp, tt, code, pre {
+  font: 11pt consolas, monospace;
+  font-size-adjust: none;
+}
+
+pre.text, pre.text2 {
+  width: 90%;
+}
+
+dt {
+  float: left; clear: left;
+  margin: 0.5em 0.5em 0 0;
+}
+dt:first-child {
+  margin-top: 0;
+}
+dd {
+  margin: 0.5em 0 0 2em;
+}
+dd p, dd ul {
+  margin-top: 0; margin-bottom: 0;
+}
+dd *+p {
+  margin-top: 0.5em;
+}
+
+ol, ul {
+  padding: 0;
+  margin: 0.5em 0 0.5em 2em;
+}
+ul.toc, ul.toc ul { 
+  margin: 0 0 0 1.5em;
+}
+ul.toc a:first-child { 
+  display: inline-block; 
+  min-width: 1.2em;
+}</style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.1.1" rel="Chapter" title="1.1 Notational Conventions"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 The &#x201C;aesgcm-128&#x201D; HTTP content-coding"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 The &#x201C;Encryption&#x201D; HTTP header field"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Encryption Header Field Parameters"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Content Encryption Key Derivation"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Encryption-Key Header Field"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Explicit Key"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Diffie-Hellman"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Examples"/>
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Successful GET Response"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Encryption and Compression"/>
+<link href="#rfc.section.5.3" rel="Chapter" title="5.3 Encryption with More Than One Key"/>
+<link href="#rfc.section.5.4" rel="Chapter" title="5.4 Encryption with Explicit Key"/>
+<link href="#rfc.section.5.5" rel="Chapter" title="5.5 Diffie-Hellman Encryption"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations"/>
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 The &#x201C;aesgcm-128&#x201D; HTTP content-coding"/>
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Encryption Header Fields"/>
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 The HTTP Encryption Parameter Registry"/>
+<link href="#rfc.section.6.3.1" rel="Chapter" title="6.3.1 keyid"/>
+<link href="#rfc.section.6.3.2" rel="Chapter" title="6.3.2 salt"/>
+<link href="#rfc.section.6.3.3" rel="Chapter" title="6.3.3 rs"/>
+<link href="#rfc.section.6.4" rel="Chapter" title="6.4 The HTTP Encryption-Key Parameter Registry"/>
+<link href="#rfc.section.6.4.1" rel="Chapter" title="6.4.1 keyid"/>
+<link href="#rfc.section.6.4.2" rel="Chapter" title="6.4.2 key"/>
+<link href="#rfc.section.6.4.3" rel="Chapter" title="6.4.3 dh"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Security Considerations"/>
+<link href="#rfc.section.7.1" rel="Chapter" title="7.1 Key and Nonce Reuse"/>
+<link href="#rfc.section.7.2" rel="Chapter" title="7.2 Content Integrity"/>
+<link href="#rfc.section.7.3" rel="Chapter" title="7.3 Leaking Information in Headers"/>
+<link href="#rfc.section.7.4" rel="Chapter" title="7.4 Poisoning Storage"/>
+<link href="#rfc.section.7.5" rel="Chapter" title="7.5 Sizing and Timing Attacks"/>
+<link href="#rfc.references" rel="Chapter" title="8 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="8.2 Informative References"/>
+<link href="#rfc.appendix.A" rel="Chapter" title="A JWE Mapping"/>
+<link href="#rfc.appendix.B" rel="Chapter" title="B Acknowledgements"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.4.7 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Thomson, M." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-http-encryption-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-5-2" />
+  <meta name="dct.abstract" content="This memo introduces a content-coding for HTTP that allows message payloads to be encrypted." />
+  <meta name="description" content="This memo introduces a content-coding for HTTP that allows message payloads to be encrypted." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Network Working Group</td>
+  <td class="right">M. Thomson</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">Mozilla</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">May 2, 2015</td>
+</tr>
+<tr>
+  <td class="left">Expires: November 3, 2015</td>
+  <td class="right"></td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Encrypted Content-Encoding for HTTP<br />
+  <span class="filename">draft-thomson-http-encryption-latest</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This memo introduces a content-coding for HTTP that allows message payloads to be encrypted.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on November 3, 2015.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2015 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<li>1.1.   <a href="#rfc.section.1.1">Notational Conventions</a></li>
+<li>2.   <a href="#rfc.section.2">The &#8220;aesgcm-128&#8221; HTTP content-coding</a></li>
+<li>3.   <a href="#rfc.section.3">The &#8220;Encryption&#8221; HTTP header field</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">Encryption Header Field Parameters</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Content Encryption Key Derivation</a></li>
+<li>4.   <a href="#rfc.section.4">Encryption-Key Header Field</a></li>
+<li>4.1.   <a href="#rfc.section.4.1">Explicit Key</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">Diffie-Hellman</a></li>
+<li>5.   <a href="#rfc.section.5">Examples</a></li>
+<li>5.1.   <a href="#rfc.section.5.1">Successful GET Response</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">Encryption and Compression</a></li>
+<li>5.3.   <a href="#rfc.section.5.3">Encryption with More Than One Key</a></li>
+<li>5.4.   <a href="#rfc.section.5.4">Encryption with Explicit Key</a></li>
+<li>5.5.   <a href="#rfc.section.5.5">Diffie-Hellman Encryption</a></li>
+<li>6.   <a href="#rfc.section.6">IANA Considerations</a></li>
+<li>6.1.   <a href="#rfc.section.6.1">The &#8220;aesgcm-128&#8221; HTTP content-coding</a></li>
+<li>6.2.   <a href="#rfc.section.6.2">Encryption Header Fields</a></li>
+<li>6.3.   <a href="#rfc.section.6.3">The HTTP Encryption Parameter Registry</a></li>
+<li>6.3.1.   <a href="#rfc.section.6.3.1">keyid</a></li>
+<li>6.3.2.   <a href="#rfc.section.6.3.2">salt</a></li>
+<li>6.3.3.   <a href="#rfc.section.6.3.3">rs</a></li>
+<li>6.4.   <a href="#rfc.section.6.4">The HTTP Encryption-Key Parameter Registry</a></li>
+<li>6.4.1.   <a href="#rfc.section.6.4.1">keyid</a></li>
+<li>6.4.2.   <a href="#rfc.section.6.4.2">key</a></li>
+<li>6.4.3.   <a href="#rfc.section.6.4.3">dh</a></li>
+<li>7.   <a href="#rfc.section.7">Security Considerations</a></li>
+<li>7.1.   <a href="#rfc.section.7.1">Key and Nonce Reuse</a></li>
+<li>7.2.   <a href="#rfc.section.7.2">Content Integrity</a></li>
+<li>7.3.   <a href="#rfc.section.7.3">Leaking Information in Headers</a></li>
+<li>7.4.   <a href="#rfc.section.7.4">Poisoning Storage</a></li>
+<li>7.5.   <a href="#rfc.section.7.5">Sizing and Timing Attacks</a></li>
+<li>8.   <a href="#rfc.references">References</a></li>
+<li>8.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>8.2.   <a href="#rfc.references.2">Informative References</a></li>
+<li>Appendix A.   <a href="#rfc.appendix.A">JWE Mapping</a></li>
+<li>Appendix B.   <a href="#rfc.appendix.B">Acknowledgements</a></li>
+<li><a href="#rfc.authors">Author's Address</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
+<p id="rfc.section.1.p.1">It is sometimes desirable to encrypt the contents of a HTTP message (request or response) in a persistent manner, so that when the payload is stored (e.g., with a HTTP PUT), only someone with the appropriate key can read it.</p>
+<p id="rfc.section.1.p.2">For example, it might be necessary to store a file on a server without exposing its contents to that server. Furthermore, that same file could be replicated to other servers (to make it more resistant to server or network failure), downloaded by clients (to make it available offline), etc.  without exposing its contents.</p>
+<p id="rfc.section.1.p.3">These uses are not met by the use of TLS <a href="#RFC5246">[RFC5246]</a>, since it only encrypts the channel between the client and server.</p>
+<p id="rfc.section.1.p.4">Message-based encryption formats - such as those that are described by <a href="#RFC4880">[RFC4880]</a>, <a href="#RFC5652">[RFC5652]</a>, <a href="#I-D.ietf-jose-json-web-encryption">[I-D.ietf-jose-json-web-encryption]</a>, and <a href="#XMLENC">[XMLENC]</a> - are not suited to stream processing, which is necessary for HTTP messages.  While virtually any of these alternatives could be profiled and adapted to suit, the overhead and complexity that would introduce is sub-optimal.  However, this format can be interpreted as sequence of JSON Web Encryption <a href="#I-D.ietf-jose-json-web-encryption">[I-D.ietf-jose-json-web-encryption]</a> values with a fixed header, see <a href="#jwe">Appendix A</a>.</p>
+<p id="rfc.section.1.p.5">This document specifies a content-coding (Section 3.1.2 of <a href="#RFC7231">[RFC7231]</a>) for HTTP to serve these and other use cases.</p>
+<p id="rfc.section.1.p.6">This mechanism is likely only a small part of a larger design that uses content encryption.  In particular, this document does not describe key management practices.  How clients and servers acquire and identify keys will depend on the use case.</p>
+<h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
+<p id="rfc.section.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#aesgcm128" id="aesgcm128">The &#8220;aesgcm-128&#8221; HTTP content-coding</a></h1>
+<p id="rfc.section.2.p.1">The &#8220;aesgcm-128&#8221; HTTP content-coding indicates that a payload has been encrypted using Advanced Encryption Standard (AES) in Galois/Counter Mode (GCM) as identified as AEAD_AES_128_GCM in <a href="#RFC5116">[RFC5116]</a>, Section 5.1.  The AEAD_AES_128_GCM algorithm uses a 128 bit content encryption key.</p>
+<p id="rfc.section.2.p.2">When this content-coding is in use, the Encryption header field (<a href="#encryption">Section 3</a>) describes how encryption has been applied.  The Encryption-Key header field (<a href="#encryption-key">Section 4</a>) can be included to describe how the the content encryption key is derived or retrieved.</p>
+<p id="rfc.section.2.p.3">The &#8220;aesgcm-128&#8221; content-coding uses a single fixed set of encryption primitives.  Cipher suite agility is achieved by defining a new content-coding scheme.  This ensures that only the HTTP Accept-Encoding header field is necessary to negotiate the use of encryption.</p>
+<p id="rfc.section.2.p.4">The &#8220;aesgcm-128&#8221; content-coding uses a fixed record size.  The resulting encoding is a series of fixed-size records, with a final record that is one or more octets shorter than a fixed sized record.</p>
+<pre>
+       +------+
+       | data |         input of between rs-256
+       +------+            and rs-1 octets
+           |
+           v
++-----+-----------+
+| pad |   data    |     add padding to form plaintext
++-----+-----------+
+         |
+         v
++--------------------+
+|    ciphertext      |  encrypt with AEAD_AES_128_GCM
++--------------------+     expands by 16 octets
+</pre>
+<p id="rfc.section.2.p.5">The record size determines the length of each portion of plaintext that is enciphered.  The record size defaults to 4096 octets, but can be changed using the &#8220;rs&#8221; parameter on the Encryption header field.</p>
+<p id="rfc.section.2.p.6">AEAD_AES_128_GCM expands ciphertext to be 16 octets longer than its input plaintext.  Therefore, the length of each enciphered record is equal to the value of the &#8220;rs&#8221; parameter plus 16 octets.  It is a fatal decryption error to have a remainder of 16 octets or less in size (though AEAD_AES_128_GCM permits input plaintext to be zero length, records always contain at least one padding octet).</p>
+<p id="rfc.section.2.p.7">Each record contains between 0 and 255 octets of padding, inserted into a record before the enciphered content.  The length of the padding is stored in the first octet of the payload.  All padding octets MUST be set to zero.  It is a fatal decryption error to have a record with more padding than the record size.</p>
+<p id="rfc.section.2.p.8">The nonce used for each record is a 96-bit value containing the index of the current record in network byte order.  Records are indexed starting at zero.</p>
+<p id="rfc.section.2.p.9">The additional data passed to the AEAD algorithm is a zero-length octet sequence.</p>
+<p id="rfc.section.2.p.10">A sequence of full-sized records can be truncated to produce a shorter sequence of records with valid authentication tags.  To prevent an attacker from truncating a stream, an endoder MUST append a record that contains only padding if the final record is not shorter than the record size.  A receiver MUST treat the stream as failed due to truncation if the final record is not less than the full record size.</p>
+<p/>
+
+<dl>
+  <dt>Issue:</dt>
+  <dd style="margin-left: 8">Double check that this construction (with no AAD) is safe.</dd>
+</dl>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#encryption" id="encryption">The &#8220;Encryption&#8221; HTTP header field</a></h1>
+<p id="rfc.section.3.p.1">The &#8220;Encryption&#8221; HTTP header field describes the encrypted content encoding(s) that have been applied to a message payload, and therefore how those content encoding(s) can be removed.</p>
+<pre>
+  Encryption-val = #encryption_params
+  encryption_params = [ param *( ";" param ) ]
+</pre>
+<p id="rfc.section.3.p.2">If the payload is encrypted more than once (as reflected by having multiple content-codings that imply encryption), each application of the content encoding is reflected in the Encryption header field, in the order in which they were applied.</p>
+<p id="rfc.section.3.p.3">The Encryption header MAY be omitted if the sender does not intend for the immediate recipient to be able to decrypt the message.  Alternatively, the Encryption header field MAY be omitted if the sender intends for the recipient to acquire the header field by other means.</p>
+<p id="rfc.section.3.p.4">Servers processing PUT requests MUST persist the value of the Encryption header field, unless they remove the content-coding by decrypting the payload.</p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#encryption-header-field-parameters" id="encryption-header-field-parameters">Encryption Header Field Parameters</a></h1>
+<p id="rfc.section.3.1.p.1">The following parameters are used in determining the key that is used for encryption:</p>
+<p/>
+
+<dl>
+  <dt>keyid:</dt>
+  <dd style="margin-left: 8">The &#8220;keyid&#8221; parameter contains a string that identifies the keying material that is used.  The &#8220;keyid&#8221; parameter SHOULD be included, unless key identification is guaranteed by other means.  The &#8220;keyid&#8221; parameter MUST be used if keying material is included in an Encryption-Key header field.</dd>
+  <dt>salt:</dt>
+  <dd style="margin-left: 8">The &#8220;salt&#8221; parameter contains a base64 URL-encoded octets that is used as salt in deriving a unique content encryption key (see <a href="#derivation">Section 3.2</a>).  The &#8220;salt&#8221; parameter MUST be present, and MUST be exactly 16 octets long.  The &#8220;salt&#8221; parameter MUST NOT be reused for two different messages that have the same content encryption key; generating a random nonce for each message ensures that reuse is highly unlikely.</dd>
+  <dt>rs:</dt>
+  <dd style="margin-left: 8">The &#8220;rs&#8221; parameter contains a positive decimal integer that describes the record size in octets.  This value MUST be greater than 1.  If the &#8220;rs&#8221; parameter is absent, the record size defaults to 4096 octets.</dd>
+</dl>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#derivation" id="derivation">Content Encryption Key Derivation</a></h1>
+<p id="rfc.section.3.2.p.1">In order to allow the reuse of keying material for multiple different messages, a content encryption key is derived for each message.  This key is derived from the decoded value of the &#8220;s&#8221; parameter using the HMAC-based key derivation function (HKDF) described in <a href="#RFC5869">[RFC5869]</a> using the SHA-256 hash algorithm <a href="#FIPS180-2">[FIPS180-2]</a>.</p>
+<p id="rfc.section.3.2.p.2">The decoded value of the &#8220;salt&#8221; parameter is the salt input to HKDF function.  The keying material identified by the &#8220;keyid&#8221; parameter is the input keying material (IKM) to HKDF.  Input keying material can either be prearranged, or can be described using the Encryption-Key header field (<a href="#encryption-key">Section 4</a>).  The first step of HKDF is therefore:</p>
+<pre>
+   PRK = HMAC-SHA-256(salt, IKM)
+</pre>
+<p id="rfc.section.3.2.p.3">AEAD_AES_128_GCM requires 16 octets (128 bits) of key, so the length (L) parameter of HKDF is 16.  The info parameter is set to the ASCII-encoded string &#8220;Content-Encoding: aesgcm128&#8221;.  The second step of HKDF can therefore be simplified to the first 16 octets of a single HMAC:</p>
+<pre>
+   OKM = HMAC-SHA-256(PRK, "Content-Encoding: aesgcm128" || 0x01)
+</pre>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encryption-key" id="encryption-key">Encryption-Key Header Field</a></h1>
+<p id="rfc.section.4.p.1">An Encryption-Key header field can be used to describe the input keying material used in the Encryption header field.</p>
+<pre>
+  Encryption-Key-val = #encryption_key_params
+  encryption_key_params = [ param *( ";" param ) ]
+</pre>
+<p/>
+
+<dl>
+  <dt>keyid:</dt>
+  <dd style="margin-left: 8">The &#8220;keyid&#8221; parameter corresponds to the &#8220;keyid&#8221; parameter in the Encryption header field.</dd>
+  <dt>key:</dt>
+  <dd style="margin-left: 8">The &#8220;key&#8221; parameter contains the URL-safe base64 <a href="#RFC4648">[RFC4648]</a> octets of the input keying material.</dd>
+  <dt>dh:</dt>
+  <dd style="margin-left: 8">The &#8220;dh&#8221; parameter contains an ephemeral Diffie-Hellman share. This form of the header field can be used to encrypt content for a specific recipient.</dd>
+</dl>
+<p id="rfc.section.4.p.3">The input keying material used by the content-encoding key derivation (see <a href="#derivation">Section 3.2</a>) can be determined based on the information in the Encryption-Key header field.  The method for key derivation depends on the parameters that are present in the header field.</p>
+<p id="rfc.section.4.p.4">Note that different methods for determining input keying materal will produce different amounts of data.  The HKDF process ensures that the final content encryption key is the necessary size.</p>
+<p id="rfc.section.4.p.5">Alternative methods for determining input keying material MAY be defined by specifications that use this content-encoding.</p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#explicit-key" id="explicit-key">Explicit Key</a></h1>
+<p id="rfc.section.4.1.p.1">The &#8220;key&#8221; parameter is decoded and used directly if present.  The &#8220;key&#8221; parameter MUST decode to exactly 16 octets in order to be used as input keying material for &#8220;aesgcm128&#8221; content encoding.</p>
+<p id="rfc.section.4.1.p.2">Other key determination parameters can be ignored if the &#8220;key&#8221; parameter is present.</p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#diffie-hellman" id="diffie-hellman">Diffie-Hellman</a></h1>
+<p id="rfc.section.4.2.p.1">The &#8220;dh&#8221; parameter is included to describe a Diffie-Hellman share, either modp (or finite field) Diffie-Hellman <a href="#DH">[DH]</a> or elliptic curve Diffie-Hellman (ECDH) <a href="#RFC4492">[RFC4492]</a>.</p>
+<p id="rfc.section.4.2.p.2">This share is combined with other information at the recipient to determine the HKDF input keying material.  In order for the exchange to be successful, the following information MUST be established out of band:</p>
+<p/>
+
+<ul>
+  <li>Which Diffie-Hellman form is used.</li>
+  <li>The modp group or elliptic curve that will be used.</li>
+  <li>The format of the ephemeral public share that is included in the &#8220;dh&#8221; parameter.  For instance, using ECDH both parties need to agree whether this is an uncompressed or compressed point.</li>
+</ul>
+<p id="rfc.section.4.2.p.4">In addition to identifying which content-encoding this input keying material is used for, the &#8220;keyid&#8221; parameter is used to identify this additional information at the receiver.</p>
+<p id="rfc.section.4.2.p.5">The intended recipient recovers their private key and are then able to generate a shared secret using the appropriate Diffie-Hellman process.</p>
+<p id="rfc.section.4.2.p.6">Specifications that rely on an Diffie-Hellman exchange for determining input keying material MUST either specify the parameters for Diffie-Hellman (group parameters, or curves and point format) that are used, or describe how those parameters are negotiated between sender and receiver.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#examples" id="examples">Examples</a></h1>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#successful-get-response" id="successful-get-response">Successful GET Response</a></h1>
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Content-Encoding: aesgcm-128
+Connection: close
+Encryption: keyid="http://example.org/bob/keys/123";
+            salt="XZwpw6o37R-6qoZjw6KwAw"
+
+[encrypted payload]
+</pre>
+<p id="rfc.section.5.1.p.1">Here, a successful HTTP GET response has been encrypted using a key that is identified by a URI.</p>
+<p id="rfc.section.5.1.p.2">Note that the media type has been changed to &#8220;application/octet-stream&#8221; to avoid exposing information about the content.</p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#encryption-and-compression" id="encryption-and-compression">Encryption and Compression</a></h1>
+<pre>
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Encoding: aesgcm-128, gzip
+Transfer-Encoding: chunked
+Encryption: keyid="mailto:me@example.com";
+            salt="m2hJ_NttRtFyUiMRPwfpHA"
+
+[encrypted payload]
+</pre>
+<h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#encryption-with-more-than-one-key" id="encryption-with-more-than-one-key">Encryption with More Than One Key</a></h1>
+<pre>
+PUT /thing HTTP/1.1
+Host: storage.example.com
+Content-Type: application/http
+Content-Encoding: aesgcm-128, aesgcm-128
+Content-Length: 1234
+Encryption: keyid="mailto:me@example.com";
+            salt="NfzOeuV5USPRA-n_9s1Lag",
+            keyid="http://example.org/bob/keys/123";
+            salt="bDMSGoc2uobK_IhavSHsHA"; rs=1200
+
+[encrypted payload]
+</pre>
+<p id="rfc.section.5.3.p.1">Here, a PUT request has been encrypted with two keys; both will be necessary to read the content.  The outer layer of encryption uses a 1200 octet record size.</p>
+<h1 id="rfc.section.5.4"><a href="#rfc.section.5.4">5.4.</a> <a href="#explicit" id="explicit">Encryption with Explicit Key</a></h1>
+<pre>
+HTTP/1.1 200 OK
+Content-Length: 31
+Content-Encoding: aesgcm-128
+Encryption: keyid="a1"; salt="ibZx1RNz537h1XNkRcPpjA"
+Encryption-Key: keyid="a1"; key="9Z57YCb3dK95dSsdFJbkag"
+
+zK3kpG__Z8whjIkG6RYgPz11oUkTKcxPy9WP-VPMfuc
+</pre>
+<p id="rfc.section.5.4.p.1">This example shows the string &#8220;I am the walrus&#8221; encrypted using an explicit key.  The content body contains a single record only and is shown here encoded in URL-safe base64 for presentation reasons only.</p>
+<h1 id="rfc.section.5.5"><a href="#rfc.section.5.5">5.5.</a> <a href="#diffie-hellman-encryption" id="diffie-hellman-encryption">Diffie-Hellman Encryption</a></h1>
+<pre>
+HTTP/1.1 200 OK
+Content-Length: 31
+Content-Encoding: aesgcm-128
+Encryption: keyid="dhkey"; salt="5hpuYfxDzG6nSs9-EQuaBg"
+Encryption-Key: keyid="dhkey";
+                dh="BLsyIPbDn6bquEOwHaju2gj8kUVoflzTtPs_6fGoock_
+                    dwxi1BcgFtObPVnic4alcEucx8I6G8HmEZCJnAl36Zg"
+
+BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
+</pre>
+<p id="rfc.section.5.5.p.1">This example shows the same string, &#8220;I am the walrus&#8221;, encrypted using ECDH over the P-256 curve <a href="#FIPS186">[FIPS186]</a>. The content body is shown here encoded in URL-safe base64 for presentation reasons only.</p>
+<p id="rfc.section.5.5.p.2">The receiver (in this case, the HTTP client) uses the key identified by the string &#8220;dhkey&#8221; and the sender (the server) uses a key pair for which the public share is included in the &#8220;dh&#8221; parameter above. The keys shown below use uncompressed points <a href="#X.692">[X.692]</a> encoded using URL-safe base64. Line wrapping is added for presentation purposes only.</p>
+<pre>
+   Receiver:
+      private key: iCjNf8v4ox_g1rJuSs_gbNmYuUYx76ZRruQs_CHRzDg
+      public key: BPM1w41cSD4BMeBTY0Fz9ryLM-LeM22Dvt0gaLRukf05
+                  rMhzFAvxVW_mipg5O0hkWad9ZWW0uMRO2Nrd32v8odQ
+   Sender:
+      private key: W0cxgeHDZkR3uMQYAbVgF5swKQUAR7DgoTaaQVlA-Fg
+      public key: &lt;the value of the "dh" parameter&gt;
+</pre>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
+<h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#the-aesgcm-128-http-content-coding" id="the-aesgcm-128-http-content-coding">The &#8220;aesgcm-128&#8221; HTTP content-coding</a></h1>
+<p id="rfc.section.6.1.p.1">This memo registers the &#8220;encrypted&#8221; HTTP content-coding in the HTTP Content Codings Registry, as detailed in <a href="#aesgcm128">Section 2</a>.</p>
+<p/>
+
+<ul>
+  <li>Name: aesgcm-128</li>
+  <li>Description: AES-GCM encryption with a 128-bit key</li>
+  <li>Reference [this specification]</li>
+</ul>
+<h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#encryption-header-fields" id="encryption-header-fields">Encryption Header Fields</a></h1>
+<p id="rfc.section.6.2.p.1">This memo registers the &#8220;Encryption&#8221; HTTP header field in the Permanent Message Header Registry, as detailed in <a href="#encryption">Section 3</a>.</p>
+<p/>
+
+<ul>
+  <li>Field name: Encryption</li>
+  <li>Protocol: HTTP</li>
+  <li>Status: Standard</li>
+  <li>Reference: [this specification]</li>
+  <li>Notes:</li>
+</ul>
+<p id="rfc.section.6.2.p.3">This memo registers the &#8220;Encryption-Key&#8221; HTTP header field in the Permanent Message Header Registry, as detailed in <a href="#encryption-key">Section 4</a>.</p>
+<p/>
+
+<ul>
+  <li>Field name: Encryption-Key</li>
+  <li>Protocol: HTTP</li>
+  <li>Status: Standard</li>
+  <li>Reference: [this specification]</li>
+  <li>Notes:</li>
+</ul>
+<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#encryption-registry" id="encryption-registry">The HTTP Encryption Parameter Registry</a></h1>
+<p id="rfc.section.6.3.p.1">This memo establishes a registry for parameters used by the &#8220;Encryption&#8221; header field under the &#8220;Hypertext Transfer Protocol (HTTP) Parameters&#8221; grouping.  The &#8220;Hypertext Transfer Protocol (HTTP) Encryption Parameters&#8221; operates under an &#8220;Specification Required&#8221; policy <a href="#RFC5226">[RFC5226]</a>.</p>
+<p id="rfc.section.6.3.p.2">Entries in this registry are expected to include the following information:</p>
+<p/>
+
+<ul>
+  <li>Parameter Name: The name of the parameter.</li>
+  <li>Purpose: A brief description of the purpose of the parameter.</li>
+  <li>Reference: A reference to a specification that defines the semantics of the parameter.</li>
+</ul>
+<p id="rfc.section.6.3.p.4">The initial contents of this registry are:</p>
+<h1 id="rfc.section.6.3.1"><a href="#rfc.section.6.3.1">6.3.1.</a> <a href="#keyid" id="keyid">keyid</a></h1>
+<p/>
+
+<ul>
+  <li>Parameter Name: keyid</li>
+  <li>Purpose: Identify the key that is in use.</li>
+  <li>Reference: [this document]</li>
+</ul>
+<h1 id="rfc.section.6.3.2"><a href="#rfc.section.6.3.2">6.3.2.</a> <a href="#salt" id="salt">salt</a></h1>
+<p/>
+
+<ul>
+  <li>Parameter Name: salt</li>
+  <li>Purpose: Provide a source of entropy for derivation of the content encryption key. This value is mandatory.</li>
+  <li>Reference: [this document]</li>
+</ul>
+<h1 id="rfc.section.6.3.3"><a href="#rfc.section.6.3.3">6.3.3.</a> <a href="#rs" id="rs">rs</a></h1>
+<p/>
+
+<ul>
+  <li>Parameter Name: rs</li>
+  <li>Purpose: The size of the encrypted records.</li>
+  <li>Reference: [this document]</li>
+</ul>
+<h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> <a href="#encryption-key-registry" id="encryption-key-registry">The HTTP Encryption-Key Parameter Registry</a></h1>
+<p id="rfc.section.6.4.p.1">This memo establishes a registry for parameters used by the &#8220;Encryption-Key&#8221; header field under the &#8220;Hypertext Transfer Protocol (HTTP) Parameters&#8221; grouping.  The &#8220;Hypertext Transfer Protocol (HTTP) Encryption Parameters&#8221; operates under an &#8220;Specification Required&#8221; policy <a href="#RFC5226">[RFC5226]</a>.</p>
+<p id="rfc.section.6.4.p.2">Entries in this registry are expected to include the following information:</p>
+<p/>
+
+<ul>
+  <li>Parameter Name: The name of the parameter.</li>
+  <li>Purpose: A brief description of the purpose of the parameter.</li>
+  <li>Reference: A reference to a specification that defines the semantics of the parameter.</li>
+</ul>
+<p id="rfc.section.6.4.p.4">The initial contents of this registry are:</p>
+<h1 id="rfc.section.6.4.1"><a href="#rfc.section.6.4.1">6.4.1.</a> <a href="#keyid-1" id="keyid-1">keyid</a></h1>
+<p/>
+
+<ul>
+  <li>Parameter Name: keyid</li>
+  <li>Purpose: Identify the key that is in use.</li>
+  <li>Reference: [this document]</li>
+</ul>
+<h1 id="rfc.section.6.4.2"><a href="#rfc.section.6.4.2">6.4.2.</a> <a href="#key" id="key">key</a></h1>
+<p/>
+
+<ul>
+  <li>Parameter Name: key</li>
+  <li>Purpose: Provide an explicit key.</li>
+  <li>Reference: [this document]</li>
+</ul>
+<h1 id="rfc.section.6.4.3"><a href="#rfc.section.6.4.3">6.4.3.</a> <a href="#dh" id="dh">dh</a></h1>
+<p/>
+
+<ul>
+  <li>Parameter Name: dh</li>
+  <li>Purpose: Carry a modp or elliptic curve Diffie-Hellman share used to derive a key.</li>
+  <li>Reference: [this document]</li>
+</ul>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
+<p id="rfc.section.7.p.1">This mechanism assumes the presence of a key management framework that is used to manage the distribution of keys between valid senders and receivers.  Defining key management is part of composing this mechanism into a larger application, protocol, or framework.</p>
+<p id="rfc.section.7.p.2">Implementation of cryptography - and key management in particular - can be difficult.  For instance, implementations need to account for the potential for exposing keying material on side channels, such as might be exposed by the time it takes to perform a given operation.  The requirements for a good implementation of cryptographic algorithms can change over time.</p>
+<h1 id="rfc.section.7.1"><a href="#rfc.section.7.1">7.1.</a> <a href="#key-and-nonce-reuse" id="key-and-nonce-reuse">Key and Nonce Reuse</a></h1>
+<p id="rfc.section.7.1.p.1">Encrypting different plaintext with the same content encryption key and nonce in AES-GCM is not safe <a href="#RFC5116">[RFC5116]</a>.  The scheme defined here relies on the uniqueness of the &#8220;nonce&#8221; parameter to ensure that the content encryption key is different for every message.</p>
+<p id="rfc.section.7.1.p.2">If a key and nonce are reused, this could expose the content encryption key and it makes message modification trivial.  If the same key is used for multiple messages, then the nonce parameter MUST be unique for each.  An implementation SHOULD generate a random nonce parameter for every message, though using a counter could achieve the desired result.</p>
+<h1 id="rfc.section.7.2"><a href="#rfc.section.7.2">7.2.</a> <a href="#content-integrity" id="content-integrity">Content Integrity</a></h1>
+<p id="rfc.section.7.2.p.1">This mechanism only provides content origin authentication.  The authentication tag only ensures that those with access to the content encryption key produce a message that will be accepted as valid.</p>
+<p id="rfc.section.7.2.p.2">Any entity with the content encryption key can therefore produce content that will be accepted as valid.  This includes all recipients of the same message.</p>
+<p id="rfc.section.7.2.p.3">Furthermore, any entity that is able to modify both the Encryption header field and the message payload can replace messages.  Without the content encryption key however, modifications to or replacement of parts of a message are not possible.</p>
+<h1 id="rfc.section.7.3"><a href="#rfc.section.7.3">7.3.</a> <a href="#leaking-information-in-headers" id="leaking-information-in-headers">Leaking Information in Headers</a></h1>
+<p id="rfc.section.7.3.p.1">Because &#8220;encrypted&#8221; only operates upon the message payload, any information exposed in header fields is visible to anyone who can read the message.</p>
+<p id="rfc.section.7.3.p.2">For example, the Content-Type header field can leak information about the message payload.</p>
+<p id="rfc.section.7.3.p.3">There are a number of strategies available to mitigate this threat, depending upon the application&#8217;s threat model and the users&#8217; tolerance for leaked information:</p>
+<p/>
+
+<ol>
+  <li>Determine that it is not an issue. For example, if it is expected that all content stored will be &#8220;application/json&#8221;, or another very common media type, exposing the Content-Type header field could be an acceptable risk.</li>
+  <li>If it is considered sensitive information and it is possible to determine it through other means (e.g., out of band, using hints in other representations, etc.), omit the relevant headers, and/or normalize them. In the case of Content-Type, this could be accomplished by always sending Content-Type: application/octet-stream (the most generic media type), or no Content-Type at all.</li>
+  <li>If it is considered sensitive information and it is not possible to convey it elsewhere, encapsulate the HTTP message using the application/http media type (Section 8.3.2 of <a href="#RFC7230">[RFC7230]</a>), encrypting that as the payload of the &#8220;outer&#8221; message.</li>
+</ol>
+<h1 id="rfc.section.7.4"><a href="#rfc.section.7.4">7.4.</a> <a href="#poisoning-storage" id="poisoning-storage">Poisoning Storage</a></h1>
+<p id="rfc.section.7.4.p.1">This mechanism only offers encryption of content; it does not perform authentication or authorization, which still needs to be performed (e.g., by HTTP authentication <a href="#RFC7235">[RFC7235]</a>).</p>
+<p id="rfc.section.7.4.p.2">This is especially relevant when a HTTP PUT request is accepted by a server; if the request is unauthenticated, it becomes possible for a third party to deny service and/or poison the store.</p>
+<h1 id="rfc.section.7.5"><a href="#rfc.section.7.5">7.5.</a> <a href="#sizing-and-timing-attacks" id="sizing-and-timing-attacks">Sizing and Timing Attacks</a></h1>
+<p id="rfc.section.7.5.p.1">Applications using this mechanism need to be aware that the size of encrypted messages, as well as their timing, HTTP methods, URIs and so on, may leak sensitive information.</p>
+<p id="rfc.section.7.5.p.2">This risk can be mitigated through the use of the padding that this mechanism provides.  Alternatively, splitting up content into segments and storing the separately might reduce exposure. HTTP/2 <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a> combined with TLS <a href="#RFC5246">[RFC5246]</a> might be used to hide the size of individual messages.</p>
+<h1 id="rfc.references"><a href="#rfc.references">8.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">8.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="DH">[DH]</b>
+      </td>
+      <td class="top"><a>Diffie, W.</a> and <a>M. Hellman</a>, "<a>New Directions in Cryptography</a>", IEEE Transactions on Information Theory, V.IT-22 n.6 , June 1977.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="FIPS180-2">[FIPS180-2]</b>
+      </td>
+      <td class="top"><a>Department of Commerce, National.</a>, "<a>NIST FIPS 180-2, Secure Hash Standard</a>", August 2002.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4492">[RFC4492]</b>
+      </td>
+      <td class="top"><a>Blake-Wilson, S.</a>, <a>Bolyard, N.</a>, <a>Gupta, V.</a>, <a>Hawk, C.</a> and <a>B. Moeller</a>, "<a href="http://tools.ietf.org/html/rfc4492">Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)</a>", RFC 4492, May 2006.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4648">[RFC4648]</b>
+      </td>
+      <td class="top"><a>Josefsson, S.</a>, "<a href="http://tools.ietf.org/html/rfc4648">The Base16, Base32, and Base64 Data Encodings</a>", RFC 4648, October 2006.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5116">[RFC5116]</b>
+      </td>
+      <td class="top"><a>McGrew, D.</a>, "<a href="http://tools.ietf.org/html/rfc5116">An Interface and Algorithms for Authenticated Encryption</a>", RFC 5116, January 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5869">[RFC5869]</b>
+      </td>
+      <td class="top"><a>Krawczyk, H.</a> and <a>P. Eronen</a>, "<a href="http://tools.ietf.org/html/rfc5869">HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</a>", RFC 5869, May 2010.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7230">[RFC7230]</b>
+      </td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, June 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7231">[RFC7231]</b>
+      </td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>", RFC 7231, June 2014.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">8.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="FIPS186">[FIPS186]</b>
+      </td>
+      <td class="top"><a>National Institute of Standards and Technology (NIST)</a>, "<a>Digital Signature Standard (DSS)</a>", NIST PUB 186-4 , July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</b>
+      </td>
+      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-http2-17">Hypertext Transfer Protocol version 2</a>", Internet-Draft draft-ietf-httpbis-http2-17, February 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-jose-json-web-encryption">[I-D.ietf-jose-json-web-encryption]</b>
+      </td>
+      <td class="top"><a>Jones, M.</a> and <a>J. Hildebrand</a>, "<a href="http://tools.ietf.org/html/draft-ietf-jose-json-web-encryption-40">JSON Web Encryption (JWE)</a>", Internet-Draft draft-ietf-jose-json-web-encryption-40, January 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4880">[RFC4880]</b>
+      </td>
+      <td class="top"><a>Callas, J.</a>, <a>Donnerhacke, L.</a>, <a>Finney, H.</a>, <a>Shaw, D.</a> and <a>R. Thayer</a>, "<a href="http://tools.ietf.org/html/rfc4880">OpenPGP Message Format</a>", RFC 4880, November 2007.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5226">[RFC5226]</b>
+      </td>
+      <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, May 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5246">[RFC5246]</b>
+      </td>
+      <td class="top"><a>Dierks, T.</a> and <a>E. Rescorla</a>, "<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>", RFC 5246, August 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5652">[RFC5652]</b>
+      </td>
+      <td class="top"><a>Housley, R.</a>, "<a href="http://tools.ietf.org/html/rfc5652">Cryptographic Message Syntax (CMS)</a>", STD 70, RFC 5652, September 2009.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7235">[RFC7235]</b>
+      </td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>", RFC 7235, June 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="X.692">[X.692]</b>
+      </td>
+      <td class="top"><a>ANSI</a>, "<a>Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA)</a>", ANSI X9.62 , 1998.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="XMLENC">[XMLENC]</b>
+      </td>
+      <td class="top"><a>Eastlake, D.</a>, <a>Reagle, J.</a>, <a>Imamura, T.</a>, <a>Dillaway, B.</a> and <a>E. Simon</a>, "<a href="http://www.w3.org/TR/xmlenc-core/">XML Encryption Syntax and Processing</a>", W3C REC , December 2002.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#jwe" id="jwe">JWE Mapping</a></h1>
+<p id="rfc.section.A.p.1">The &#8220;aesgcm-128&#8221; content encoding can be considered as a sequence of JSON Web Encryption (JWE) objects, each corresponding to a single fixed size record.  The following transformations are applied to a JWE object that might be expressed using the JWE Compact Serialization:</p>
+<p/>
+
+<ul>
+  <li>The JWE Protected Header is fixed to a value { &#8220;alg&#8221;: &#8220;dir&#8221;, &#8220;enc&#8221;: &#8220;A128GCM&#8221; }, describing direct encryption using AES-GCM with a 128-bit key.  This header is not transmitted, it is instead implied by the value of the Content-Encoding header field.</li>
+  <li>The JWE Encrypted Key is empty, as stipulated by the direct encryption algorithm.</li>
+  <li>The JWE Initialization Vector (&#8220;iv&#8221;) for each record is set to the 96-bit integer value of the record sequence number, starting at zero.  This value is also not transmitted.</li>
+  <li>The final value is the concatenated JWE Ciphertext and the JWE Authentication Tag, both expressed without URL-safe Base 64 encoding.  The &#8220;.&#8221; separator is omitted, since the length of these fields is known.</li>
+</ul>
+<p id="rfc.section.A.p.3">Thus, the example in <a href="#explicit">Section 5.4</a> can be rendered using the JWE Compact Serialization as:</p>
+<pre>
+eyAiYWxnIjogImRpciIsICJlbmMiOiAiQTEyOEdDTSIgfQ..AAAAAAAAAAAAAAAA.
+LwTC-fwdKh8de0smD2jfzA.eh1vURhu65M2lxhctbbntA
+</pre>
+<p id="rfc.section.A.p.4">Where the first line represents the fixed JWE Protected Header, JWE Encrypted Key, and JWE Initialization Vector, all of which are determined algorithmically.  The second line contains the encoded body, split into JWE Ciphertext and JWE Authentication Tag.</p>
+<h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.B.p.1">Mark Nottingham was an original author of this document.</p>
+<p id="rfc.section.B.p.2">The following people provided valuable feedback and suggestions: Richard Barnes, Mike Jones, Stephen Farrell, Eric Rescorla, and Jim Schaad.</p>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Author's Address</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Martin Thomson</span> 
+	  <span class="n hidden">
+		<span class="family-name">Thomson</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Mozilla</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:martin.thomson@gmail.com">martin.thomson@gmail.com</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
