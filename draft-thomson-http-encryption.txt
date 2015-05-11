@@ -4,8 +4,8 @@
 
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
-Intended status: Standards Track                             May 2, 2015
-Expires: November 3, 2015
+Intended status: Standards Track                            May 11, 2015
+Expires: November 12, 2015
 
 
                   Encrypted Content-Encoding for HTTP
@@ -31,7 +31,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 3, 2015.
+   This Internet-Draft will expire on November 12, 2015.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson                 Expires November 3, 2015                [Page 1]
+Thomson                 Expires November 12, 2015               [Page 1]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
@@ -72,7 +72,7 @@ Table of Contents
    5.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .   8
      5.1.  Successful GET Response . . . . . . . . . . . . . . . . .   8
      5.2.  Encryption and Compression  . . . . . . . . . . . . . . .   8
-     5.3.  Encryption with More Than One Key . . . . . . . . . . . .   8
+     5.3.  Encryption with More Than One Key . . . . . . . . . . . .   9
      5.4.  Encryption with Explicit Key  . . . . . . . . . . . . . .   9
      5.5.  Diffie-Hellman Encryption . . . . . . . . . . . . . . . .   9
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
@@ -102,14 +102,14 @@ Table of Contents
 1.  Introduction
 
    It is sometimes desirable to encrypt the contents of a HTTP message
-   (request or response) in a persistent manner, so that when the
-   payload is stored (e.g., with a HTTP PUT), only someone with the
-   appropriate key can read it.
+   (request or response) so that when the payload is stored (e.g., with
+   a HTTP PUT), only someone with the appropriate key can read it.
 
 
 
 
-Thomson                 Expires November 3, 2015                [Page 2]
+
+Thomson                 Expires November 12, 2015               [Page 2]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
@@ -123,18 +123,22 @@ Internet-Draft           HTTP encryption coding                 May 2015
    These uses are not met by the use of TLS [RFC5246], since it only
    encrypts the channel between the client and server.
 
-   Message-based encryption formats - such as those that are described
-   by [RFC4880], [RFC5652], [I-D.ietf-jose-json-web-encryption], and
-   [XMLENC] - are not suited to stream processing, which is necessary
-   for HTTP messages.  While virtually any of these alternatives could
-   be profiled and adapted to suit, the overhead and complexity that
-   would introduce is sub-optimal.  However, this format can be
-   interpreted as sequence of JSON Web Encryption
-   [I-D.ietf-jose-json-web-encryption] values with a fixed header, see
-   Appendix A.
-
    This document specifies a content-coding (Section 3.1.2 of [RFC7231])
    for HTTP to serve these and other use cases.
+
+   This content-coding is not a direct adaptation of message-based
+   encryption formats - such as those that are described by [RFC4880],
+   [RFC5652], [I-D.ietf-jose-json-web-encryption], and [XMLENC] - which
+   are not suited to stream processing, which is necessary for HTTP.
+   The format described here cleaves more closely to the lower level
+   constructs described in [RFC5116].
+
+   To the extent that message-based encryption formats use the same
+   primitives, the format can be considered as sequence of encrypted
+   messages with a particular profile.  For instance, Appendix A
+   explains how the format is congruent with a sequence of JSON Web
+   Encryption [I-D.ietf-jose-json-web-encryption] values with a fixed
+   header.
 
    This mechanism is likely only a small part of a larger design that
    uses content encryption.  In particular, this document does not
@@ -157,19 +161,20 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    When this content-coding is in use, the Encryption header field
    (Section 3) describes how encryption has been applied.  The
+
+
+
+
+Thomson                 Expires November 12, 2015               [Page 3]
+
+Internet-Draft           HTTP encryption coding                 May 2015
+
+
    Encryption-Key header field (Section 4) can be included to describe
    how the the content encryption key is derived or retrieved.
 
    The "aesgcm-128" content-coding uses a single fixed set of encryption
    primitives.  Cipher suite agility is achieved by defining a new
-
-
-
-Thomson                 Expires November 3, 2015                [Page 3]
-
-Internet-Draft           HTTP encryption coding                 May 2015
-
-
    content-coding scheme.  This ensures that only the HTTP Accept-
    Encoding header field is necessary to negotiate the use of
    encryption.
@@ -198,39 +203,39 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    AEAD_AES_128_GCM expands ciphertext to be 16 octets longer than its
    input plaintext.  Therefore, the length of each enciphered record is
-   equal to the value of the "rs" parameter plus 16 octets.  It is a
-   fatal decryption error to have a remainder of 16 octets or less in
-   size (though AEAD_AES_128_GCM permits input plaintext to be zero
-   length, records always contain at least one padding octet).
+   equal to the value of the "rs" parameter plus 16 octets.  A receiver
+   MUST fail to decrypt if the remainder is 16 octets or less in size
+   (though AEAD_AES_128_GCM permits input plaintext to be zero length,
+   records always contain at least one padding octet).
 
    Each record contains between 0 and 255 octets of padding, inserted
    into a record before the enciphered content.  The length of the
    padding is stored in the first octet of the payload.  All padding
-   octets MUST be set to zero.  It is a fatal decryption error to have a
-   record with more padding than the record size.
+   octets MUST be set to zero.  A receiver MUST fail to decrypt if a
+   record has more padding than the record size can accommodate.
 
    The nonce used for each record is a 96-bit value containing the index
    of the current record in network byte order.  Records are indexed
    starting at zero.
 
-   The additional data passed to the AEAD algorithm is a zero-length
-   octet sequence.
-
-   A sequence of full-sized records can be truncated to produce a
-   shorter sequence of records with valid authentication tags.  To
 
 
 
-Thomson                 Expires November 3, 2015                [Page 4]
+Thomson                 Expires November 12, 2015               [Page 4]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
 
-   prevent an attacker from truncating a stream, an endoder MUST append
-   a record that contains only padding if the final record is not
-   shorter than the record size.  A receiver MUST treat the stream as
-   failed due to truncation if the final record is not less than the
-   full record size.
+   The additional data passed to each invocation of AEAD_AES_128_GCM is
+   a zero-length octet sequence.
+
+   A sequence of full-sized records can be truncated to produce a
+   shorter sequence of records with valid authentication tags.  To
+   prevent an attacker from truncating a stream, an encoder MUST append
+   a record that contains only padding and is smaller than the full
+   record size if the final record ends on a record boundary.  A
+   receiver MUST treat the stream as failed due to truncation if the
+   final record is the full record size.
 
    Issue:  Double check that this construction (with no AAD) is safe.
 
@@ -269,19 +274,19 @@ Internet-Draft           HTTP encryption coding                 May 2015
       The "keyid" parameter MUST be used if keying material is included
       in an Encryption-Key header field.
 
+
+
+
+Thomson                 Expires November 12, 2015               [Page 5]
+
+Internet-Draft           HTTP encryption coding                 May 2015
+
+
    salt:  The "salt" parameter contains a base64 URL-encoded octets that
       is used as salt in deriving a unique content encryption key (see
       Section 3.2).  The "salt" parameter MUST be present, and MUST be
       exactly 16 octets long.  The "salt" parameter MUST NOT be reused
       for two different messages that have the same content encryption
-
-
-
-Thomson                 Expires November 3, 2015                [Page 5]
-
-Internet-Draft           HTTP encryption coding                 May 2015
-
-
       key; generating a random nonce for each message ensures that reuse
       is highly unlikely.
 
@@ -294,8 +299,8 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    In order to allow the reuse of keying material for multiple different
    messages, a content encryption key is derived for each message.  This
-   key is derived from the decoded value of the "s" parameter using the
-   HMAC-based key derivation function (HKDF) described in [RFC5869]
+   key is derived from the decoded value of the "salt" parameter using
+   the HMAC-based key derivation function (HKDF) described in [RFC5869]
    using the SHA-256 hash algorithm [FIPS180-2].
 
    The decoded value of the "salt" parameter is the salt input to HKDF
@@ -325,18 +330,16 @@ Internet-Draft           HTTP encryption coding                 May 2015
    keyid:  The "keyid" parameter corresponds to the "keyid" parameter in
       the Encryption header field.
 
-   key:  The "key" parameter contains the URL-safe base64 [RFC4648]
-      octets of the input keying material.
 
 
 
-
-
-
-Thomson                 Expires November 3, 2015                [Page 6]
+Thomson                 Expires November 12, 2015               [Page 6]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
+
+   key:  The "key" parameter contains the URL-safe base64 [RFC4648]
+      octets of the input keying material.
 
    dh:  The "dh" parameter contains an ephemeral Diffie-Hellman share.
       This form of the header field can be used to encrypt content for a
@@ -382,17 +385,18 @@ Internet-Draft           HTTP encryption coding                 May 2015
       "dh" parameter.  For instance, using ECDH both parties need to
       agree whether this is an uncompressed or compressed point.
 
-   In addition to identifying which content-encoding this input keying
-   material is used for, the "keyid" parameter is used to identify this
-   additional information at the receiver.
 
 
 
 
-Thomson                 Expires November 3, 2015                [Page 7]
+Thomson                 Expires November 12, 2015               [Page 7]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
+
+   In addition to identifying which content-encoding this input keying
+   material is used for, the "keyid" parameter is used to identify this
+   additional information at the receiver.
 
    The intended recipient recovers their private key and are then able
    to generate a shared secret using the appropriate Diffie-Hellman
@@ -434,7 +438,6 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    [encrypted payload]
 
-5.3.  Encryption with More Than One Key
 
 
 
@@ -442,13 +445,12 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
 
 
-
-
-
-Thomson                 Expires November 3, 2015                [Page 8]
+Thomson                 Expires November 12, 2015               [Page 8]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
+
+5.3.  Encryption with More Than One Key
 
    PUT /thing HTTP/1.1
    Host: storage.example.com
@@ -496,16 +498,16 @@ Internet-Draft           HTTP encryption coding                 May 2015
    using ECDH over the P-256 curve [FIPS186].  The content body is shown
    here encoded in URL-safe base64 for presentation reasons only.
 
-   The receiver (in this case, the HTTP client) uses the key identified
-   by the string "dhkey" and the sender (the server) uses a key pair for
 
 
 
-Thomson                 Expires November 3, 2015                [Page 9]
+Thomson                 Expires November 12, 2015               [Page 9]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
 
+   The receiver (in this case, the HTTP client) uses the key identified
+   by the string "dhkey" and the sender (the server) uses a key pair for
    which the public share is included in the "dh" parameter above.  The
    keys shown below use uncompressed points [X.692] encoded using URL-
    safe base64.  Line wrapping is added for presentation purposes only.
@@ -529,7 +531,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    o  Description: AES-GCM encryption with a 128-bit key
 
-   o  Reference [this specification]
+   o  Reference: this specification
 
 6.2.  Encryption Header Fields
 
@@ -542,7 +544,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    o  Status: Standard
 
-   o  Reference: [this specification]
+   o  Reference: this specification
 
    o  Notes:
 
@@ -553,16 +555,16 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    o  Protocol: HTTP
 
-   o  Status: Standard
 
 
-
-Thomson                 Expires November 3, 2015               [Page 10]
+Thomson                 Expires November 12, 2015              [Page 10]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
 
-   o  Reference: [this specification]
+   o  Status: Standard
+
+   o  Reference: this specification
 
    o  Notes:
 
@@ -592,7 +594,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    o  Purpose: Identify the key that is in use.
 
-   o  Reference: [this document]
+   o  Reference: this document
 
 6.3.2.  salt
 
@@ -601,7 +603,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
    o  Purpose: Provide a source of entropy for derivation of the content
       encryption key.  This value is mandatory.
 
-   o  Reference: [this document]
+   o  Reference: this document
 
 6.3.3.  rs
 
@@ -609,14 +611,14 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    o  Purpose: The size of the encrypted records.
 
-   o  Reference: [this document]
 
 
-
-Thomson                 Expires November 3, 2015               [Page 11]
+Thomson                 Expires November 12, 2015              [Page 11]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
+
+   o  Reference: this document
 
 6.4.  The HTTP Encryption-Key Parameter Registry
 
@@ -644,7 +646,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    o  Purpose: Identify the key that is in use.
 
-   o  Reference: [this document]
+   o  Reference: this document
 
 6.4.2.  key
 
@@ -652,7 +654,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
    o  Purpose: Provide an explicit key.
 
-   o  Reference: [this document]
+   o  Reference: this document
 
 6.4.3.  dh
 
@@ -661,15 +663,13 @@ Internet-Draft           HTTP encryption coding                 May 2015
    o  Purpose: Carry a modp or elliptic curve Diffie-Hellman share used
       to derive a key.
 
-   o  Reference: [this document]
+   o  Reference: this document
 
 
 
 
 
-
-
-Thomson                 Expires November 3, 2015               [Page 12]
+Thomson                 Expires November 12, 2015              [Page 12]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
@@ -705,8 +705,8 @@ Internet-Draft           HTTP encryption coding                 May 2015
 7.2.  Content Integrity
 
    This mechanism only provides content origin authentication.  The
-   authentication tag only ensures that those with access to the content
-   encryption key produce a message that will be accepted as valid.
+   authentication tag only ensures that an entity with access to the
+   content encryption key produced the encrypted data.
 
    Any entity with the content encryption key can therefore produce
    content that will be accepted as valid.  This includes all recipients
@@ -725,7 +725,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
 
 
-Thomson                 Expires November 3, 2015               [Page 13]
+Thomson                 Expires November 12, 2015              [Page 13]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
@@ -781,7 +781,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
 
 
-Thomson                 Expires November 3, 2015               [Page 14]
+Thomson                 Expires November 12, 2015              [Page 14]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
@@ -837,7 +837,7 @@ Internet-Draft           HTTP encryption coding                 May 2015
 
 
 
-Thomson                 Expires November 3, 2015               [Page 15]
+Thomson                 Expires November 12, 2015              [Page 15]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
@@ -893,7 +893,7 @@ Appendix A.  JWE Mapping
 
 
 
-Thomson                 Expires November 3, 2015               [Page 16]
+Thomson                 Expires November 12, 2015              [Page 16]
 
 Internet-Draft           HTTP encryption coding                 May 2015
 
@@ -949,4 +949,4 @@ Author's Address
 
 
 
-Thomson                 Expires November 3, 2015               [Page 17]
+Thomson                 Expires November 12, 2015              [Page 17]
