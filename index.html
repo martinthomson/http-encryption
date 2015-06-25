@@ -1052,7 +1052,7 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
 <ul>
   <li>The JWE Protected Header is fixed to a value { &#8220;alg&#8221;: &#8220;dir&#8221;, &#8220;enc&#8221;: &#8220;A128GCM&#8221; }, describing direct encryption using AES-GCM with a 128-bit content encryption key.  This header is not transmitted, it is instead implied by the value of the Content-Encoding header field.</li>
   <li>The JWE Encrypted Key is empty, as stipulated by the direct encryption algorithm.</li>
-  <li>The JWE Initialization Vector (&#8220;iv&#8221;) for each record is set to the 96-bit integer value of the record sequence number, starting at zero.  This value is also not transmitted.</li>
+  <li>The JWE Initialization Vector (&#8220;iv&#8221;) for each record is set to the exclusive or of the 96-bit record sequence number, starting at zero, and a value derived from the input keying material (see <a href="#nonce">Section 3.3</a>).  This value is also not transmitted.</li>
   <li>The final value is the concatenated JWE Ciphertext and the JWE Authentication Tag, both expressed without URL-safe Base 64 encoding.  The &#8220;.&#8221; separator is omitted, since the length of these fields is known.</li>
 </ul>
 <p id="rfc.section.A.p.3">Thus, the example in <a href="#explicit">Section 5.4</a> can be rendered using the JWE Compact Serialization as:</p>
