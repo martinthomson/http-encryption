@@ -96,9 +96,9 @@ Table of Contents
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  16
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  16
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  17
-   Appendix A.  JWE Mapping  . . . . . . . . . . . . . . . . . . . .  18
+   Appendix A.  JWE Mapping  . . . . . . . . . . . . . . . . . . . .  17
    Appendix B.  Acknowledgements . . . . . . . . . . . . . . . . . .  18
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  19
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
 
 1.  Introduction
 
@@ -128,17 +128,16 @@ Internet-Draft           HTTP encryption coding                June 2015
 
    This content-coding is not a direct adaptation of message-based
    encryption formats - such as those that are described by [RFC4880],
-   [RFC5652], [I-D.ietf-jose-json-web-encryption], and [XMLENC] - which
-   are not suited to stream processing, which is necessary for HTTP.
-   The format described here cleaves more closely to the lower level
-   constructs described in [RFC5116].
+   [RFC5652], [RFC7516], and [XMLENC] - which are not suited to stream
+   processing, which is necessary for HTTP.  The format described here
+   cleaves more closely to the lower level constructs described in
+   [RFC5116].
 
    To the extent that message-based encryption formats use the same
    primitives, the format can be considered as sequence of encrypted
    messages with a particular profile.  For instance, Appendix A
    explains how the format is congruent with a sequence of JSON Web
-   Encryption [I-D.ietf-jose-json-web-encryption] values with a fixed
-   header.
+   Encryption [RFC7516] values with a fixed header.
 
    This mechanism is likely only a small part of a larger design that
    uses content encryption.  How clients and servers acquire and
@@ -161,7 +160,8 @@ Internet-Draft           HTTP encryption coding                June 2015
    Section 5.1.  The AEAD_AES_128_GCM algorithm uses a 128 bit content
    encryption key.
 
-
+   When this content-coding is in use, the Encryption header field
+   (Section 3) describes how encryption has been applied.  The
 
 
 
@@ -170,8 +170,6 @@ Thomson                 Expires December 27, 2015               [Page 3]
 Internet-Draft           HTTP encryption coding                June 2015
 
 
-   When this content-coding is in use, the Encryption header field
-   (Section 3) describes how encryption has been applied.  The
    Encryption-Key header field (Section 4) can be included to describe
    how the content encryption key is derived or retrieved.
 
@@ -217,6 +215,8 @@ Internet-Draft           HTTP encryption coding                June 2015
    into a record before the enciphered content.  Padding consists of a
    length byte, followed that number of zero-valued octets.  A receiver
    MUST fail to decrypt if any padding octet other than the first is
+   non-zero, or a record has more padding than the record size can
+   accommodate.
 
 
 
@@ -225,9 +225,6 @@ Thomson                 Expires December 27, 2015               [Page 4]
 
 Internet-Draft           HTTP encryption coding                June 2015
 
-
-   non-zero, or a record has more padding than the record size can
-   accommodate.
 
    The nonce for each record is a 96-bit value constructed from the
    record sequence number and the input keying material.  Nonce
@@ -274,6 +271,9 @@ Internet-Draft           HTTP encryption coding                June 2015
    sender intends for the recipient to acquire the header field by other
    means.
 
+   Servers processing PUT requests MUST persist the value of the
+   Encryption header field, unless they remove the content-coding by
+   decrypting the payload.
 
 
 
@@ -281,10 +281,6 @@ Thomson                 Expires December 27, 2015               [Page 5]
 
 Internet-Draft           HTTP encryption coding                June 2015
 
-
-   Servers processing PUT requests MUST persist the value of the
-   Encryption header field, unless they remove the content-coding by
-   decrypting the payload.
 
 3.1.  Encryption Header Field Parameters
 
@@ -330,6 +326,10 @@ Internet-Draft           HTTP encryption coding                June 2015
 
    AEAD_AES_128_GCM requires a 16 octet (128 bit) content encryption
    key, so the length (L) parameter to HKDF is 16.  The info parameter
+   is set to the ASCII-encoded string "Content-Encoding: aesgcm128".
+   The second step of HKDF can therefore be simplified to the first 16
+   octets of a single HMAC:
+
 
 
 
@@ -337,10 +337,6 @@ Thomson                 Expires December 27, 2015               [Page 6]
 
 Internet-Draft           HTTP encryption coding                June 2015
 
-
-   is set to the ASCII-encoded string "Content-Encoding: aesgcm128".
-   The second step of HKDF can therefore be simplified to the first 16
-   octets of a single HMAC:
 
       CEK = HMAC-SHA-256(PRK, "Content-Encoding: aesgcm128" || 0x01)
 
@@ -386,6 +382,10 @@ Internet-Draft           HTTP encryption coding                June 2015
       This form of the header field can be used to encrypt content for a
       specific recipient.
 
+   The input keying material used by the content-encoding key derivation
+   (see Section 3.2) can be determined based on the information in the
+   Encryption-Key header field.  The method for key derivation depends
+   on the parameters that are present in the header field.
 
 
 
@@ -393,11 +393,6 @@ Thomson                 Expires December 27, 2015               [Page 7]
 
 Internet-Draft           HTTP encryption coding                June 2015
 
-
-   The input keying material used by the content-encoding key derivation
-   (see Section 3.2) can be determined based on the information in the
-   Encryption-Key header field.  The method for key derivation depends
-   on the parameters that are present in the header field.
 
    The value or values provided in the Encryption-Key header field is
    valid only for the current HTTP message unless additional information
@@ -443,16 +438,17 @@ Internet-Draft           HTTP encryption coding                June 2015
    material is used for, the "keyid" parameter is used to identify this
    additional information at the receiver.
 
+   The intended recipient recovers their private key and are then able
+   to generate a shared secret using the appropriate Diffie-Hellman
+   process.
+
+
 
 
 Thomson                 Expires December 27, 2015               [Page 8]
 
 Internet-Draft           HTTP encryption coding                June 2015
 
-
-   The intended recipient recovers their private key and are then able
-   to generate a shared secret using the appropriate Diffie-Hellman
-   process.
 
    Specifications that rely on an Diffie-Hellman exchange for
    determining input keying material MUST either specify the parameters
@@ -491,6 +487,10 @@ Internet-Draft           HTTP encryption coding                June 2015
    [encrypted payload]
 
 5.3.  Encryption with More Than One Key
+
+
+
+
 
 
 
@@ -693,8 +693,8 @@ Internet-Draft           HTTP encryption coding                June 2015
    This risk can be mitigated through the use of the padding that this
    mechanism provides.  Alternatively, splitting up content into
    segments and storing the separately might reduce exposure.  HTTP/2
-   [I-D.ietf-httpbis-http2] combined with TLS [RFC5246] might be used to
-   hide the size of individual messages.
+   [RFC7540] combined with TLS [RFC5246] might be used to hide the size
+   of individual messages.
 
 7.  IANA Considerations
 
@@ -904,16 +904,6 @@ Internet-Draft           HTTP encryption coding                June 2015
               "Digital Signature Standard (DSS)", NIST PUB 186-4 , July
               2013.
 
-   [I-D.ietf-httpbis-http2]
-              Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
-              Protocol version 2", draft-ietf-httpbis-http2-17 (work in
-              progress), February 2015.
-
-   [I-D.ietf-jose-json-web-encryption]
-              Jones, M. and J. Hildebrand, "JSON Web Encryption (JWE)",
-              draft-ietf-jose-json-web-encryption-40 (work in progress),
-              January 2015.
-
    [RFC4880]  Callas, J., Donnerhacke, L., Finney, H., Shaw, D., and R.
               Thayer, "OpenPGP Message Format", RFC 4880, November 2007.
 
@@ -934,6 +924,12 @@ Internet-Draft           HTTP encryption coding                June 2015
    [RFC7235]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
               (HTTP/1.1): Authentication", RFC 7235, June 2014.
 
+   [RFC7516]  Jones, M. and J. Hildebrand, "JSON Web Encryption (JWE)",
+              RFC 7516, May 2015.
+
+   [RFC7540]  Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
+              Protocol Version 2 (HTTP/2)", RFC 7540, May 2015.
+
    [X.692]    ANSI, "Public Key Cryptography For The Financial Services
               Industry: The Elliptic Curve Digital Signature Algorithm
               (ECDSA)", ANSI X9.62 , 1998.
@@ -942,9 +938,13 @@ Internet-Draft           HTTP encryption coding                June 2015
               E. Simon, "XML Encryption Syntax and Processing", W3C REC
               , December 2002, <http://www.w3.org/TR/xmlenc-core/>.
 
+Appendix A.  JWE Mapping
 
-
-
+   The "aesgcm128" content encoding can be considered as a sequence of
+   JSON Web Encryption (JWE) objects [RFC7516], each corresponding to a
+   single fixed size record.  The following transformations are applied
+   to a JWE object that might be expressed using the JWE Compact
+   Serialization:
 
 
 
@@ -953,14 +953,6 @@ Thomson                 Expires December 27, 2015              [Page 17]
 
 Internet-Draft           HTTP encryption coding                June 2015
 
-
-Appendix A.  JWE Mapping
-
-   The "aesgcm128" content encoding can be considered as a sequence of
-   JSON Web Encryption (JWE) objects, each corresponding to a single
-   fixed size record.  The following transformations are applied to a
-   JWE object that might be expressed using the JWE Compact
-   Serialization:
 
    o  The JWE Protected Header is fixed to a value { "alg": "dir",
       "enc": "A128GCM" }, describing direct encryption using AES-GCM
@@ -1000,16 +992,6 @@ Appendix B.  Acknowledgements
    Richard Barnes, Mike Jones, Stephen Farrell, Eric Rescorla, and Jim
    Schaad.
 
-
-
-
-
-
-Thomson                 Expires December 27, 2015              [Page 18]
-
-Internet-Draft           HTTP encryption coding                June 2015
-
-
 Author's Address
 
    Martin Thomson
@@ -1023,42 +1005,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Thomson                 Expires December 27, 2015              [Page 19]
+Thomson                 Expires December 27, 2015              [Page 18]

@@ -603,8 +603,8 @@ ul.toc a:first-child {
 <p id="rfc.section.1.p.2">For example, it might be necessary to store a file on a server without exposing its contents to that server. Furthermore, that same file could be replicated to other servers (to make it more resistant to server or network failure), downloaded by clients (to make it available offline), etc.  without exposing its contents.</p>
 <p id="rfc.section.1.p.3">These uses are not met by the use of TLS <a href="#RFC5246">[RFC5246]</a>, since it only encrypts the channel between the client and server.</p>
 <p id="rfc.section.1.p.4">This document specifies a content-coding (Section 3.1.2 of <a href="#RFC7231">[RFC7231]</a>) for HTTP to serve these and other use cases.</p>
-<p id="rfc.section.1.p.5">This content-coding is not a direct adaptation of message-based encryption formats - such as those that are described by <a href="#RFC4880">[RFC4880]</a>, <a href="#RFC5652">[RFC5652]</a>, <a href="#I-D.ietf-jose-json-web-encryption">[I-D.ietf-jose-json-web-encryption]</a>, and <a href="#XMLENC">[XMLENC]</a> - which are not suited to stream processing, which is necessary for HTTP.  The format described here cleaves more closely to the lower level constructs described in <a href="#RFC5116">[RFC5116]</a>.</p>
-<p id="rfc.section.1.p.6">To the extent that message-based encryption formats use the same primitives, the format can be considered as sequence of encrypted messages with a particular profile.  For instance, <a href="#jwe">Appendix A</a> explains how the format is congruent with a sequence of JSON Web Encryption <a href="#I-D.ietf-jose-json-web-encryption">[I-D.ietf-jose-json-web-encryption]</a> values with a fixed header.</p>
+<p id="rfc.section.1.p.5">This content-coding is not a direct adaptation of message-based encryption formats - such as those that are described by <a href="#RFC4880">[RFC4880]</a>, <a href="#RFC5652">[RFC5652]</a>, <a href="#RFC7516">[RFC7516]</a>, and <a href="#XMLENC">[XMLENC]</a> - which are not suited to stream processing, which is necessary for HTTP.  The format described here cleaves more closely to the lower level constructs described in <a href="#RFC5116">[RFC5116]</a>.</p>
+<p id="rfc.section.1.p.6">To the extent that message-based encryption formats use the same primitives, the format can be considered as sequence of encrypted messages with a particular profile.  For instance, <a href="#jwe">Appendix A</a> explains how the format is congruent with a sequence of JSON Web Encryption <a href="#RFC7516">[RFC7516]</a> values with a fixed header.</p>
 <p id="rfc.section.1.p.7">This mechanism is likely only a small part of a larger design that uses content encryption.  How clients and servers acquire and identify keys will depend on the use case.  Though a complete key management system is not described, this document defines an Encryption-Key header field that can be used to convey keying material.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
 <p id="rfc.section.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
@@ -812,7 +812,7 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
 <p id="rfc.section.6.4.p.2">This is especially relevant when a HTTP PUT request is accepted by a server; if the request is unauthenticated, it becomes possible for a third party to deny service and/or poison the store.</p>
 <h1 id="rfc.section.6.5"><a href="#rfc.section.6.5">6.5.</a> <a href="#sizing-and-timing-attacks" id="sizing-and-timing-attacks">Sizing and Timing Attacks</a></h1>
 <p id="rfc.section.6.5.p.1">Applications using this mechanism need to be aware that the size of encrypted messages, as well as their timing, HTTP methods, URIs and so on, may leak sensitive information.</p>
-<p id="rfc.section.6.5.p.2">This risk can be mitigated through the use of the padding that this mechanism provides.  Alternatively, splitting up content into segments and storing the separately might reduce exposure. HTTP/2 <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a> combined with TLS <a href="#RFC5246">[RFC5246]</a> might be used to hide the size of individual messages.</p>
+<p id="rfc.section.6.5.p.2">This risk can be mitigated through the use of the padding that this mechanism provides.  Alternatively, splitting up content into segments and storing the separately might reduce exposure. HTTP/2 <a href="#RFC7540">[RFC7540]</a> combined with TLS <a href="#RFC5246">[RFC5246]</a> might be used to hide the size of individual messages.</p>
 <h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <h1 id="rfc.section.7.1"><a href="#rfc.section.7.1">7.1.</a> <a href="#the-aesgcm128-http-content-encoding" id="the-aesgcm128-http-content-encoding">The &#8220;aesgcm128&#8221; HTTP Content Encoding</a></h1>
 <p id="rfc.section.7.1.p.1">This memo registers the &#8220;encrypted&#8221; HTTP content-coding in the HTTP Content Codings Registry, as detailed in <a href="#aesgcm128">Section 2</a>.</p>
@@ -985,18 +985,6 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
     </tr>
     <tr>
       <td class="reference">
-        <b id="I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</b>
-      </td>
-      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-http2-17">Hypertext Transfer Protocol version 2</a>", Internet-Draft draft-ietf-httpbis-http2-17, February 2015.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="I-D.ietf-jose-json-web-encryption">[I-D.ietf-jose-json-web-encryption]</b>
-      </td>
-      <td class="top"><a>Jones, M.</a> and <a>J. Hildebrand</a>, "<a href="http://tools.ietf.org/html/draft-ietf-jose-json-web-encryption-40">JSON Web Encryption (JWE)</a>", Internet-Draft draft-ietf-jose-json-web-encryption-40, January 2015.</td>
-    </tr>
-    <tr>
-      <td class="reference">
         <b id="RFC4880">[RFC4880]</b>
       </td>
       <td class="top"><a>Callas, J.</a>, <a>Donnerhacke, L.</a>, <a>Finney, H.</a>, <a>Shaw, D.</a> and <a>R. Thayer</a>, "<a href="http://tools.ietf.org/html/rfc4880">OpenPGP Message Format</a>", RFC 4880, November 2007.</td>
@@ -1033,6 +1021,18 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC7516">[RFC7516]</b>
+      </td>
+      <td class="top"><a>Jones, M.</a> and <a>J. Hildebrand</a>, "<a href="http://tools.ietf.org/html/rfc7516">JSON Web Encryption (JWE)</a>", RFC 7516, May 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7540">[RFC7540]</b>
+      </td>
+      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/rfc7540">Hypertext Transfer Protocol Version 2 (HTTP/2)</a>", RFC 7540, May 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="X.692">[X.692]</b>
       </td>
       <td class="top"><a>ANSI</a>, "<a>Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA)</a>", ANSI X9.62 , 1998.</td>
@@ -1046,7 +1046,7 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
   </tbody>
 </table>
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#jwe" id="jwe">JWE Mapping</a></h1>
-<p id="rfc.section.A.p.1">The &#8220;aesgcm128&#8221; content encoding can be considered as a sequence of JSON Web Encryption (JWE) objects, each corresponding to a single fixed size record.  The following transformations are applied to a JWE object that might be expressed using the JWE Compact Serialization:</p>
+<p id="rfc.section.A.p.1">The &#8220;aesgcm128&#8221; content encoding can be considered as a sequence of JSON Web Encryption (JWE) objects <a href="#RFC7516">[RFC7516]</a>, each corresponding to a single fixed size record.  The following transformations are applied to a JWE object that might be expressed using the JWE Compact Serialization:</p>
 <p/>
 
 <ul>
