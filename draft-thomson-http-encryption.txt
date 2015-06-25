@@ -62,8 +62,8 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
-   2.  The "aesgcm128" HTTP content-coding . . . . . . . . . . . . .   3
-   3.  The Encryption HTTP header field  . . . . . . . . . . . . . .   5
+   2.  The "aesgcm128" HTTP Content Encoding . . . . . . . . . . . .   3
+   3.  The Encryption HTTP Header Field  . . . . . . . . . . . . . .   5
      3.1.  Encryption Header Field Parameters  . . . . . . . . . . .   6
      3.2.  Content Encryption Key Derivation . . . . . . . . . . . .   6
      3.3.  Nonce Derivation  . . . . . . . . . . . . . . . . . . . .   7
@@ -76,23 +76,23 @@ Table of Contents
      5.3.  Encryption with More Than One Key . . . . . . . . . . . .   9
      5.4.  Encryption with Explicit Key  . . . . . . . . . . . . . .  10
      5.5.  Diffie-Hellman Encryption . . . . . . . . . . . . . . . .  10
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
-     6.1.  The "aesgcm128" HTTP content-coding . . . . . . . . . . .  11
-     6.2.  Encryption Header Fields  . . . . . . . . . . . . . . . .  11
-     6.3.  The HTTP Encryption Parameter Registry  . . . . . . . . .  12
-       6.3.1.  keyid . . . . . . . . . . . . . . . . . . . . . . . .  12
-       6.3.2.  salt  . . . . . . . . . . . . . . . . . . . . . . . .  12
-       6.3.3.  rs  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     6.4.  The HTTP Encryption-Key Parameter Registry  . . . . . . .  13
-       6.4.1.  keyid . . . . . . . . . . . . . . . . . . . . . . . .  13
-       6.4.2.  key . . . . . . . . . . . . . . . . . . . . . . . . .  13
-       6.4.3.  dh  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
-     7.1.  Key and Nonce Reuse . . . . . . . . . . . . . . . . . . .  14
-     7.2.  Content Integrity . . . . . . . . . . . . . . . . . . . .  14
-     7.3.  Leaking Information in Headers  . . . . . . . . . . . . .  15
-     7.4.  Poisoning Storage . . . . . . . . . . . . . . . . . . . .  15
-     7.5.  Sizing and Timing Attacks . . . . . . . . . . . . . . . .  16
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  11
+     6.1.  Key and Nonce Reuse . . . . . . . . . . . . . . . . . . .  11
+     6.2.  Content Integrity . . . . . . . . . . . . . . . . . . . .  12
+     6.3.  Leaking Information in Headers  . . . . . . . . . . . . .  12
+     6.4.  Poisoning Storage . . . . . . . . . . . . . . . . . . . .  13
+     6.5.  Sizing and Timing Attacks . . . . . . . . . . . . . . . .  13
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
+     7.1.  The "aesgcm128" HTTP Content Encoding . . . . . . . . . .  13
+     7.2.  Encryption Header Fields  . . . . . . . . . . . . . . . .  13
+     7.3.  The HTTP Encryption Parameter Registry  . . . . . . . . .  14
+       7.3.1.  keyid . . . . . . . . . . . . . . . . . . . . . . . .  14
+       7.3.2.  salt  . . . . . . . . . . . . . . . . . . . . . . . .  14
+       7.3.3.  rs  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     7.4.  The HTTP Encryption-Key Parameter Registry  . . . . . . .  15
+       7.4.1.  keyid . . . . . . . . . . . . . . . . . . . . . . . .  15
+       7.4.2.  key . . . . . . . . . . . . . . . . . . . . . . . . .  15
+       7.4.3.  dh  . . . . . . . . . . . . . . . . . . . . . . . . .  16
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  16
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  16
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  17
@@ -153,7 +153,7 @@ Internet-Draft           HTTP encryption coding                June 2015
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [RFC2119].
 
-2.  The "aesgcm128" HTTP content-coding
+2.  The "aesgcm128" HTTP Content Encoding
 
    The "aesgcm128" HTTP content-coding indicates that a payload has been
    encrypted using Advanced Encryption Standard (AES) in Galois/Counter
@@ -251,7 +251,7 @@ Internet-Draft           HTTP encryption coding                June 2015
    records start and end on multiples of the record size, plus the 16
    octet authentication tag size.
 
-3.  The Encryption HTTP header field
+3.  The Encryption HTTP Header Field
 
    The "Encryption" HTTP header field describes the encrypted content
    encoding(s) that have been applied to a payload body, and therefore
@@ -577,169 +577,7 @@ Internet-Draft           HTTP encryption coding                June 2015
          private key: W0cxgeHDZkR3uMQYAbVgF5swKQUAR7DgoTaaQVlA-Fg
          public key: <the value of the "dh" parameter>
 
-6.  IANA Considerations
-
-6.1.  The "aesgcm128" HTTP content-coding
-
-   This memo registers the "encrypted" HTTP content-coding in the HTTP
-   Content Codings Registry, as detailed in Section 2.
-
-   o  Name: aesgcm128
-
-   o  Description: AES-GCM encryption with a 128-bit content encryption
-      key
-
-   o  Reference: this specification
-
-6.2.  Encryption Header Fields
-
-   This memo registers the "Encryption" HTTP header field in the
-   Permanent Message Header Registry, as detailed in Section 3.
-
-   o  Field name: Encryption
-
-   o  Protocol: HTTP
-
-   o  Status: Standard
-
-   o  Reference: this specification
-
-   o  Notes:
-
-   This memo registers the "Encryption-Key" HTTP header field in the
-   Permanent Message Header Registry, as detailed in Section 4.
-
-   o  Field name: Encryption-Key
-
-
-
-Thomson                 Expires December 27, 2015              [Page 11]
-
-Internet-Draft           HTTP encryption coding                June 2015
-
-
-   o  Protocol: HTTP
-
-   o  Status: Standard
-
-   o  Reference: this specification
-
-   o  Notes:
-
-6.3.  The HTTP Encryption Parameter Registry
-
-   This memo establishes a registry for parameters used by the
-   "Encryption" header field under the "Hypertext Transfer Protocol
-   (HTTP) Parameters" grouping.  The "Hypertext Transfer Protocol (HTTP)
-   Encryption Parameters" operates under an "Specification Required"
-   policy [RFC5226].
-
-   Entries in this registry are expected to include the following
-   information:
-
-   o  Parameter Name: The name of the parameter.
-
-   o  Purpose: A brief description of the purpose of the parameter.
-
-   o  Reference: A reference to a specification that defines the
-      semantics of the parameter.
-
-   The initial contents of this registry are:
-
-6.3.1.  keyid
-
-   o  Parameter Name: keyid
-
-   o  Purpose: Identify the key that is in use.
-
-   o  Reference: this document
-
-6.3.2.  salt
-
-   o  Parameter Name: salt
-
-   o  Purpose: Provide a source of entropy for derivation of a content
-      encryption key.  This value is mandatory.
-
-   o  Reference: this document
-
-
-
-
-
-
-
-Thomson                 Expires December 27, 2015              [Page 12]
-
-Internet-Draft           HTTP encryption coding                June 2015
-
-
-6.3.3.  rs
-
-   o  Parameter Name: rs
-
-   o  Purpose: The size of the encrypted records.
-
-   o  Reference: this document
-
-6.4.  The HTTP Encryption-Key Parameter Registry
-
-   This memo establishes a registry for parameters used by the
-   "Encryption-Key" header field under the "Hypertext Transfer Protocol
-   (HTTP) Parameters" grouping.  The "Hypertext Transfer Protocol (HTTP)
-   Encryption Parameters" operates under an "Specification Required"
-   policy [RFC5226].
-
-   Entries in this registry are expected to include the following
-   information:
-
-   o  Parameter Name: The name of the parameter.
-
-   o  Purpose: A brief description of the purpose of the parameter.
-
-   o  Reference: A reference to a specification that defines the
-      semantics of the parameter.
-
-   The initial contents of this registry are:
-
-6.4.1.  keyid
-
-   o  Parameter Name: keyid
-
-   o  Purpose: Identify the key that is in use.
-
-   o  Reference: this document
-
-6.4.2.  key
-
-   o  Parameter Name: key
-
-   o  Purpose: Provide an explicit input keying material value.
-
-   o  Reference: this document
-
-
-
-
-
-
-
-
-Thomson                 Expires December 27, 2015              [Page 13]
-
-Internet-Draft           HTTP encryption coding                June 2015
-
-
-6.4.3.  dh
-
-   o  Parameter Name: dh
-
-   o  Purpose: Carry a modp or elliptic curve Diffie-Hellman share used
-      to derive input keying material.
-
-   o  Reference: this document
-
-7.  Security Considerations
+6.  Security Considerations
 
    This mechanism assumes the presence of a key management framework
    that is used to manage the distribution of keys between valid senders
@@ -753,7 +591,7 @@ Internet-Draft           HTTP encryption coding                June 2015
    The requirements for a good implementation of cryptographic
    algorithms can change over time.
 
-7.1.  Key and Nonce Reuse
+6.1.  Key and Nonce Reuse
 
    Encrypting different plaintext with the same content encryption key
    and nonce in AES-GCM is not safe [RFC5116].  The scheme defined here
@@ -771,20 +609,20 @@ Internet-Draft           HTTP encryption coding                June 2015
    generate a random salt parameter for every message; a counter could
    achieve the same result.
 
-7.2.  Content Integrity
+
+
+
+
+Thomson                 Expires December 27, 2015              [Page 11]
+
+Internet-Draft           HTTP encryption coding                June 2015
+
+
+6.2.  Content Integrity
 
    This mechanism only provides content origin authentication.  The
    authentication tag only ensures that an entity with access to the
    content encryption key produced the encrypted data.
-
-
-
-
-
-Thomson                 Expires December 27, 2015              [Page 14]
-
-Internet-Draft           HTTP encryption coding                June 2015
-
 
    Any entity with the content encryption key can therefore produce
    content that will be accepted as valid.  This includes all recipients
@@ -796,7 +634,7 @@ Internet-Draft           HTTP encryption coding                June 2015
    modifications to or replacement of parts of a payload body are not
    possible.
 
-7.3.  Leaking Information in Headers
+6.3.  Leaking Information in Headers
 
    Because only the payload body is encrypted, information exposed in
    header fields is visible to anyone who can read the HTTP message.
@@ -826,27 +664,27 @@ Internet-Draft           HTTP encryption coding                June 2015
        application/http media type (Section 8.3.2 of [RFC7230]),
        encrypting that as the payload of the "outer" message.
 
-7.4.  Poisoning Storage
+
+
+
+
+
+Thomson                 Expires December 27, 2015              [Page 12]
+
+Internet-Draft           HTTP encryption coding                June 2015
+
+
+6.4.  Poisoning Storage
 
    This mechanism only offers encryption of content; it does not perform
    authentication or authorization, which still needs to be performed
    (e.g., by HTTP authentication [RFC7235]).
 
-
-
-
-
-
-Thomson                 Expires December 27, 2015              [Page 15]
-
-Internet-Draft           HTTP encryption coding                June 2015
-
-
    This is especially relevant when a HTTP PUT request is accepted by a
    server; if the request is unauthenticated, it becomes possible for a
    third party to deny service and/or poison the store.
 
-7.5.  Sizing and Timing Attacks
+6.5.  Sizing and Timing Attacks
 
    Applications using this mechanism need to be aware that the size of
    encrypted messages, as well as their timing, HTTP methods, URIs and
@@ -857,6 +695,161 @@ Internet-Draft           HTTP encryption coding                June 2015
    segments and storing the separately might reduce exposure.  HTTP/2
    [I-D.ietf-httpbis-http2] combined with TLS [RFC5246] might be used to
    hide the size of individual messages.
+
+7.  IANA Considerations
+
+7.1.  The "aesgcm128" HTTP Content Encoding
+
+   This memo registers the "encrypted" HTTP content-coding in the HTTP
+   Content Codings Registry, as detailed in Section 2.
+
+   o  Name: aesgcm128
+
+   o  Description: AES-GCM encryption with a 128-bit content encryption
+      key
+
+   o  Reference: this specification
+
+7.2.  Encryption Header Fields
+
+   This memo registers the "Encryption" HTTP header field in the
+   Permanent Message Header Registry, as detailed in Section 3.
+
+   o  Field name: Encryption
+
+   o  Protocol: HTTP
+
+   o  Status: Standard
+
+   o  Reference: this specification
+
+
+
+Thomson                 Expires December 27, 2015              [Page 13]
+
+Internet-Draft           HTTP encryption coding                June 2015
+
+
+   o  Notes:
+
+   This memo registers the "Encryption-Key" HTTP header field in the
+   Permanent Message Header Registry, as detailed in Section 4.
+
+   o  Field name: Encryption-Key
+
+   o  Protocol: HTTP
+
+   o  Status: Standard
+
+   o  Reference: this specification
+
+   o  Notes:
+
+7.3.  The HTTP Encryption Parameter Registry
+
+   This memo establishes a registry for parameters used by the
+   "Encryption" header field under the "Hypertext Transfer Protocol
+   (HTTP) Parameters" grouping.  The "Hypertext Transfer Protocol (HTTP)
+   Encryption Parameters" operates under an "Specification Required"
+   policy [RFC5226].
+
+   Entries in this registry are expected to include the following
+   information:
+
+   o  Parameter Name: The name of the parameter.
+
+   o  Purpose: A brief description of the purpose of the parameter.
+
+   o  Reference: A reference to a specification that defines the
+      semantics of the parameter.
+
+   The initial contents of this registry are:
+
+7.3.1.  keyid
+
+   o  Parameter Name: keyid
+
+   o  Purpose: Identify the key that is in use.
+
+   o  Reference: this document
+
+7.3.2.  salt
+
+   o  Parameter Name: salt
+
+
+
+
+
+Thomson                 Expires December 27, 2015              [Page 14]
+
+Internet-Draft           HTTP encryption coding                June 2015
+
+
+   o  Purpose: Provide a source of entropy for derivation of a content
+      encryption key.  This value is mandatory.
+
+   o  Reference: this document
+
+7.3.3.  rs
+
+   o  Parameter Name: rs
+
+   o  Purpose: The size of the encrypted records.
+
+   o  Reference: this document
+
+7.4.  The HTTP Encryption-Key Parameter Registry
+
+   This memo establishes a registry for parameters used by the
+   "Encryption-Key" header field under the "Hypertext Transfer Protocol
+   (HTTP) Parameters" grouping.  The "Hypertext Transfer Protocol (HTTP)
+   Encryption Parameters" operates under an "Specification Required"
+   policy [RFC5226].
+
+   Entries in this registry are expected to include the following
+   information:
+
+   o  Parameter Name: The name of the parameter.
+
+   o  Purpose: A brief description of the purpose of the parameter.
+
+   o  Reference: A reference to a specification that defines the
+      semantics of the parameter.
+
+   The initial contents of this registry are:
+
+7.4.1.  keyid
+
+   o  Parameter Name: keyid
+
+   o  Purpose: Identify the key that is in use.
+
+   o  Reference: this document
+
+7.4.2.  key
+
+   o  Parameter Name: key
+
+   o  Purpose: Provide an explicit input keying material value.
+
+   o  Reference: this document
+
+
+
+Thomson                 Expires December 27, 2015              [Page 15]
+
+Internet-Draft           HTTP encryption coding                June 2015
+
+
+7.4.3.  dh
+
+   o  Parameter Name: dh
+
+   o  Purpose: Carry a modp or elliptic curve Diffie-Hellman share used
+      to derive input keying material.
+
+   o  Reference: this document
 
 8.  References
 
@@ -890,6 +883,13 @@ Internet-Draft           HTTP encryption coding                June 2015
               (HTTP/1.1): Message Syntax and Routing", RFC 7230, June
               2014.
 
+   [RFC7231]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
+              (HTTP/1.1): Semantics and Content", RFC 7231, June 2014.
+
+
+
+
+
 
 
 
@@ -897,9 +897,6 @@ Thomson                 Expires December 27, 2015              [Page 16]
 
 Internet-Draft           HTTP encryption coding                June 2015
 
-
-   [RFC7231]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
-              (HTTP/1.1): Semantics and Content", RFC 7231, June 2014.
 
 8.2.  Informative References
 
@@ -944,6 +941,9 @@ Internet-Draft           HTTP encryption coding                June 2015
    [XMLENC]   Eastlake, D., Reagle, J., Imamura, T., Dillaway, B., and
               E. Simon, "XML Encryption Syntax and Processing", W3C REC
               , December 2002, <http://www.w3.org/TR/xmlenc-core/>.
+
+
+
 
 
 
