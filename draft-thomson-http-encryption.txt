@@ -4,8 +4,8 @@
 
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
-Intended status: Standards Track                           June 25, 2015
-Expires: December 27, 2015
+Intended status: Standards Track                            July 1, 2015
+Expires: January 2, 2016
 
 
                   Encrypted Content-Encoding for HTTP
@@ -31,7 +31,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 27, 2015.
+   This Internet-Draft will expire on January 2, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson                 Expires December 27, 2015               [Page 1]
+Thomson                  Expires January 2, 2016                [Page 1]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson                 Expires December 27, 2015               [Page 2]
+Thomson                  Expires January 2, 2016                [Page 2]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    For example, it might be necessary to store a file on a server
@@ -165,9 +165,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015               [Page 3]
+Thomson                  Expires January 2, 2016                [Page 3]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    Encryption-Key header field (Section 4) can be included to describe
@@ -221,9 +221,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015               [Page 4]
+Thomson                  Expires January 2, 2016                [Page 4]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    The nonce for each record is a 96-bit value constructed from the
@@ -277,9 +277,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015               [Page 5]
+Thomson                  Expires January 2, 2016                [Page 5]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
 3.1.  Encryption Header Field Parameters
@@ -333,9 +333,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015               [Page 6]
+Thomson                  Expires January 2, 2016                [Page 6]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
       CEK = HMAC-SHA-256(PRK, "Content-Encoding: aesgcm128" || 0x01)
@@ -389,9 +389,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015               [Page 7]
+Thomson                  Expires January 2, 2016                [Page 7]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    The value or values provided in the Encryption-Key header field is
@@ -445,9 +445,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015               [Page 8]
+Thomson                  Expires January 2, 2016                [Page 8]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    Specifications that rely on an Diffie-Hellman exchange for
@@ -501,9 +501,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015               [Page 9]
+Thomson                  Expires January 2, 2016                [Page 9]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    PUT /thing HTTP/1.1
@@ -557,9 +557,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015              [Page 10]
+Thomson                  Expires January 2, 2016               [Page 10]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    The receiver (in this case, the HTTP client) uses a key pair that is
@@ -613,9 +613,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015              [Page 11]
+Thomson                  Expires January 2, 2016               [Page 11]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
 6.2.  Content Integrity
@@ -669,9 +669,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015              [Page 12]
+Thomson                  Expires January 2, 2016               [Page 12]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
 6.4.  Poisoning Storage
@@ -725,9 +725,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015              [Page 13]
+Thomson                  Expires January 2, 2016               [Page 13]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    o  Notes:
@@ -781,9 +781,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015              [Page 14]
+Thomson                  Expires January 2, 2016               [Page 14]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    o  Purpose: Provide a source of entropy for derivation of a content
@@ -837,9 +837,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015              [Page 15]
+Thomson                  Expires January 2, 2016               [Page 15]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
 7.4.3.  dh
@@ -893,9 +893,9 @@ Internet-Draft           HTTP encryption coding                June 2015
 
 
 
-Thomson                 Expires December 27, 2015              [Page 16]
+Thomson                  Expires January 2, 2016               [Page 16]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
 8.2.  Informative References
@@ -949,9 +949,9 @@ Appendix A.  JWE Mapping
 
 
 
-Thomson                 Expires December 27, 2015              [Page 17]
+Thomson                  Expires January 2, 2016               [Page 17]
 
-Internet-Draft           HTTP encryption coding                June 2015
+Internet-Draft           HTTP encryption coding                July 2015
 
 
    o  The JWE Protected Header is fixed to a value { "alg": "dir",
@@ -989,8 +989,8 @@ Appendix B.  Acknowledgements
    Mark Nottingham was an original author of this document.
 
    The following people provided valuable feedback and suggestions:
-   Richard Barnes, Mike Jones, Stephen Farrell, Eric Rescorla, and Jim
-   Schaad.
+   Richard Barnes, Mike Jones, Stephen Farrell, John Mattsson, Eric
+   Rescorla, and Jim Schaad.
 
 Author's Address
 
@@ -1005,4 +1005,4 @@ Author's Address
 
 
 
-Thomson                 Expires December 27, 2015              [Page 18]
+Thomson                  Expires January 2, 2016               [Page 18]
