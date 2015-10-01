@@ -4,8 +4,8 @@
 
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
-Intended status: Standards Track                            July 1, 2015
-Expires: January 2, 2016
+Intended status: Standards Track                         October 1, 2015
+Expires: April 3, 2016
 
 
                   Encrypted Content-Encoding for HTTP
@@ -31,7 +31,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 2, 2016.
+   This Internet-Draft will expire on April 3, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson                  Expires January 2, 2016                [Page 1]
+Thomson                   Expires April 3, 2016                 [Page 1]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
 Table of Contents
@@ -91,14 +91,14 @@ Table of Contents
        7.3.3.  rs  . . . . . . . . . . . . . . . . . . . . . . . . .  15
      7.4.  The HTTP Encryption-Key Parameter Registry  . . . . . . .  15
        7.4.1.  keyid . . . . . . . . . . . . . . . . . . . . . . . .  15
-       7.4.2.  key . . . . . . . . . . . . . . . . . . . . . . . . .  15
+       7.4.2.  aesgcm128 . . . . . . . . . . . . . . . . . . . . . .  15
        7.4.3.  dh  . . . . . . . . . . . . . . . . . . . . . . . . .  16
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  16
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  16
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  17
-   Appendix A.  JWE Mapping  . . . . . . . . . . . . . . . . . . . .  17
-   Appendix B.  Acknowledgements . . . . . . . . . . . . . . . . . .  18
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
+   Appendix A.  JWE Mapping  . . . . . . . . . . . . . . . . . . . .  18
+   Appendix B.  Acknowledgements . . . . . . . . . . . . . . . . . .  19
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  19
 
 1.  Introduction
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson                  Expires January 2, 2016                [Page 2]
+Thomson                   Expires April 3, 2016                 [Page 2]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    For example, it might be necessary to store a file on a server
@@ -165,9 +165,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016                [Page 3]
+Thomson                   Expires April 3, 2016                 [Page 3]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    Encryption-Key header field (Section 4) can be included to describe
@@ -221,9 +221,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016                [Page 4]
+Thomson                   Expires April 3, 2016                 [Page 4]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    The nonce for each record is a 96-bit value constructed from the
@@ -277,9 +277,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016                [Page 5]
+Thomson                   Expires April 3, 2016                 [Page 5]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
 3.1.  Encryption Header Field Parameters
@@ -333,9 +333,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016                [Page 6]
+Thomson                   Expires April 3, 2016                 [Page 6]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
       CEK = HMAC-SHA-256(PRK, "Content-Encoding: aesgcm128" || 0x01)
@@ -375,8 +375,8 @@ Internet-Draft           HTTP encryption coding                July 2015
    keyid:  The "keyid" parameter corresponds to the "keyid" parameter in
       the Encryption header field.
 
-   key:  The "key" parameter contains the URL-safe base64 [RFC4648]
-      octets of the input keying material.
+   aesgcm128:  The "aesgcm128" parameter contains the URL-safe base64
+      [RFC4648] octets of the input keying material.
 
    dh:  The "dh" parameter contains an ephemeral Diffie-Hellman share.
       This form of the header field can be used to encrypt content for a
@@ -389,9 +389,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016                [Page 7]
+Thomson                   Expires April 3, 2016                 [Page 7]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    The value or values provided in the Encryption-Key header field is
@@ -407,12 +407,12 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 4.1.  Explicit Key
 
-   The "key" parameter is decoded and used as the input keying material
-   if present.  The "key" parameter MUST decode to at least 16 octets in
-   order to be used as input keying material for "aesgcm128" content
-   encoding.
+   The "aesgcm128" parameter is decoded and used as the input keying
+   material for the "aesgcm128" content encoding.  The "aesgcm128"
+   parameter MUST decode to at least 16 octets in order to be used as
+   input keying material for "aesgcm128" content encoding.
 
-   Other key determination parameters can be ignored if the "key"
+   Other key determination parameters can be ignored if the "aesgcm128"
    parameter is present.
 
 4.2.  Diffie-Hellman
@@ -445,9 +445,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016                [Page 8]
+Thomson                   Expires April 3, 2016                 [Page 8]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    Specifications that rely on an Diffie-Hellman exchange for
@@ -501,9 +501,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016                [Page 9]
+Thomson                   Expires April 3, 2016                 [Page 9]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    PUT /thing HTTP/1.1
@@ -528,7 +528,7 @@ Internet-Draft           HTTP encryption coding                July 2015
    Content-Length: 32
    Content-Encoding: aesgcm128
    Encryption: keyid="a1"; salt="ibZx1RNz537h1XNkRcPpjA"
-   Encryption-Key: keyid="a1"; key="9Z57YCb3dK95dSsdFJbkag"
+   Encryption-Key: keyid="a1"; aesgcm128="9Z57YCb3dK95dSsdFJbkag"
 
    zK3kpG__Z8whjIkG6RYgPz11oUkTKcxPy9WP-VPMfuc
 
@@ -557,9 +557,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016               [Page 10]
+Thomson                   Expires April 3, 2016                [Page 10]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    The receiver (in this case, the HTTP client) uses a key pair that is
@@ -613,9 +613,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016               [Page 11]
+Thomson                   Expires April 3, 2016                [Page 11]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
 6.2.  Content Integrity
@@ -669,9 +669,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016               [Page 12]
+Thomson                   Expires April 3, 2016                [Page 12]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
 6.4.  Poisoning Storage
@@ -725,9 +725,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016               [Page 13]
+Thomson                   Expires April 3, 2016                [Page 13]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    o  Notes:
@@ -781,9 +781,9 @@ Internet-Draft           HTTP encryption coding                July 2015
 
 
 
-Thomson                  Expires January 2, 2016               [Page 14]
+Thomson                   Expires April 3, 2016                [Page 14]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
 
    o  Purpose: Provide a source of entropy for derivation of a content
@@ -827,20 +827,22 @@ Internet-Draft           HTTP encryption coding                July 2015
 
    o  Reference: this document
 
-7.4.2.  key
+7.4.2.  aesgcm128
 
-   o  Parameter Name: key
+   o  Parameter Name: aesgcm128
 
-   o  Purpose: Provide an explicit input keying material value.
+   o  Purpose: Provide an explicit input keying material value for the
+      aesgcm128 content encoding.
+
+
+
+
+Thomson                   Expires April 3, 2016                [Page 15]
+
+Internet-Draft           HTTP encryption coding             October 2015
+
 
    o  Reference: this document
-
-
-
-Thomson                  Expires January 2, 2016               [Page 15]
-
-Internet-Draft           HTTP encryption coding                July 2015
-
 
 7.4.3.  dh
 
@@ -864,39 +866,47 @@ Internet-Draft           HTTP encryption coding                July 2015
               Secure Hash Standard", August 2002.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+              Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
+              RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
 
    [RFC4492]  Blake-Wilson, S., Bolyard, N., Gupta, V., Hawk, C., and B.
               Moeller, "Elliptic Curve Cryptography (ECC) Cipher Suites
-              for Transport Layer Security (TLS)", RFC 4492, May 2006.
+              for Transport Layer Security (TLS)", RFC 4492, DOI
+              10.17487/RFC4492, May 2006,
+              <http://www.rfc-editor.org/info/rfc4492>.
 
    [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
-              Encodings", RFC 4648, October 2006.
+              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
+              <http://www.rfc-editor.org/info/rfc4648>.
 
    [RFC5116]  McGrew, D., "An Interface and Algorithms for Authenticated
-              Encryption", RFC 5116, January 2008.
+              Encryption", RFC 5116, DOI 10.17487/RFC5116, January 2008,
+              <http://www.rfc-editor.org/info/rfc5116>.
 
    [RFC5869]  Krawczyk, H. and P. Eronen, "HMAC-based Extract-and-Expand
-              Key Derivation Function (HKDF)", RFC 5869, May 2010.
-
-   [RFC7230]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
-              (HTTP/1.1): Message Syntax and Routing", RFC 7230, June
-              2014.
-
-   [RFC7231]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
-              (HTTP/1.1): Semantics and Content", RFC 7231, June 2014.
+              Key Derivation Function (HKDF)", RFC 5869, DOI 10.17487/
+              RFC5869, May 2010,
+              <http://www.rfc-editor.org/info/rfc5869>.
 
 
 
 
 
-
-
-
-Thomson                  Expires January 2, 2016               [Page 16]
+Thomson                   Expires April 3, 2016                [Page 16]
 
-Internet-Draft           HTTP encryption coding                July 2015
+Internet-Draft           HTTP encryption coding             October 2015
 
+
+   [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Message Syntax and Routing", RFC
+              7230, DOI 10.17487/RFC7230, June 2014,
+              <http://www.rfc-editor.org/info/rfc7230>.
+
+   [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Semantics and Content", RFC 7231, DOI
+              10.17487/RFC7231, June 2014,
+              <http://www.rfc-editor.org/info/rfc7231>.
 
 8.2.  Informative References
 
@@ -905,30 +915,49 @@ Internet-Draft           HTTP encryption coding                July 2015
               2013.
 
    [RFC4880]  Callas, J., Donnerhacke, L., Finney, H., Shaw, D., and R.
-              Thayer, "OpenPGP Message Format", RFC 4880, November 2007.
+              Thayer, "OpenPGP Message Format", RFC 4880, DOI 10.17487/
+              RFC4880, November 2007,
+              <http://www.rfc-editor.org/info/rfc4880>.
 
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", BCP 26, RFC 5226,
-              May 2008.
+              DOI 10.17487/RFC5226, May 2008,
+              <http://www.rfc-editor.org/info/rfc5226>.
 
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
-              (TLS) Protocol Version 1.2", RFC 5246, August 2008.
+              (TLS) Protocol Version 1.2", RFC 5246, DOI 10.17487/
+              RFC5246, August 2008,
+              <http://www.rfc-editor.org/info/rfc5246>.
 
    [RFC5652]  Housley, R., "Cryptographic Message Syntax (CMS)", STD 70,
-              RFC 5652, September 2009.
+              RFC 5652, DOI 10.17487/RFC5652, September 2009,
+              <http://www.rfc-editor.org/info/rfc5652>.
 
-   [RFC7233]  Fielding, R., Lafon, Y., and J. Reschke, "Hypertext
-              Transfer Protocol (HTTP/1.1): Range Requests", RFC 7233,
-              June 2014.
+   [RFC7233]  Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed.,
+              "Hypertext Transfer Protocol (HTTP/1.1): Range Requests",
+              RFC 7233, DOI 10.17487/RFC7233, June 2014,
+              <http://www.rfc-editor.org/info/rfc7233>.
 
-   [RFC7235]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
-              (HTTP/1.1): Authentication", RFC 7235, June 2014.
+   [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Authentication", RFC 7235, DOI
+              10.17487/RFC7235, June 2014,
+              <http://www.rfc-editor.org/info/rfc7235>.
 
    [RFC7516]  Jones, M. and J. Hildebrand, "JSON Web Encryption (JWE)",
-              RFC 7516, May 2015.
+              RFC 7516, DOI 10.17487/RFC7516, May 2015,
+              <http://www.rfc-editor.org/info/rfc7516>.
 
-   [RFC7540]  Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
-              Protocol Version 2 (HTTP/2)", RFC 7540, May 2015.
+
+
+Thomson                   Expires April 3, 2016                [Page 17]
+
+Internet-Draft           HTTP encryption coding             October 2015
+
+
+   [RFC7540]  Belshe, M., Peon, R., and M. Thomson, Ed., "Hypertext
+              Transfer Protocol Version 2 (HTTP/2)", RFC 7540, DOI
+              10.17487/RFC7540, May 2015,
+              <http://www.rfc-editor.org/info/rfc7540>.
 
    [X.692]    ANSI, "Public Key Cryptography For The Financial Services
               Industry: The Elliptic Curve Digital Signature Algorithm
@@ -945,14 +974,6 @@ Appendix A.  JWE Mapping
    single fixed size record.  The following transformations are applied
    to a JWE object that might be expressed using the JWE Compact
    Serialization:
-
-
-
-
-Thomson                  Expires January 2, 2016               [Page 17]
-
-Internet-Draft           HTTP encryption coding                July 2015
-
 
    o  The JWE Protected Header is fixed to a value { "alg": "dir",
       "enc": "A128GCM" }, describing direct encryption using AES-GCM
@@ -981,6 +1002,14 @@ Internet-Draft           HTTP encryption coding                July 2015
 
    Where the first line represents the fixed JWE Protected Header, JWE
    Encrypted Key, and JWE Initialization Vector, all of which are
+
+
+
+Thomson                   Expires April 3, 2016                [Page 18]
+
+Internet-Draft           HTTP encryption coding             October 2015
+
+
    determined algorithmically.  The second line contains the encoded
    body, split into JWE Ciphertext and JWE Authentication Tag.
 
@@ -1005,4 +1034,31 @@ Author's Address
 
 
 
-Thomson                  Expires January 2, 2016               [Page 18]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thomson                   Expires April 3, 2016                [Page 19]

@@ -483,7 +483,7 @@ ul.toc a:first-child {
 <link href="#rfc.section.7.3.3" rel="Chapter" title="7.3.3 rs"/>
 <link href="#rfc.section.7.4" rel="Chapter" title="7.4 The HTTP Encryption-Key Parameter Registry"/>
 <link href="#rfc.section.7.4.1" rel="Chapter" title="7.4.1 keyid"/>
-<link href="#rfc.section.7.4.2" rel="Chapter" title="7.4.2 key"/>
+<link href="#rfc.section.7.4.2" rel="Chapter" title="7.4.2 aesgcm128"/>
 <link href="#rfc.section.7.4.3" rel="Chapter" title="7.4.3 dh"/>
 <link href="#rfc.references" rel="Chapter" title="8 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References"/>
@@ -498,7 +498,7 @@ ul.toc a:first-child {
 
   <meta name="dct.creator" content="Thomson, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-http-encryption-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-7-1" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-10-1" />
   <meta name="dct.abstract" content="This memo introduces a content-coding for HTTP that allows message payloads to be encrypted." />
   <meta name="description" content="This memo introduces a content-coding for HTTP that allows message payloads to be encrypted." />
 
@@ -519,10 +519,10 @@ ul.toc a:first-child {
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
-  <td class="right">July 1, 2015</td>
+  <td class="right">October 1, 2015</td>
 </tr>
 <tr>
-  <td class="left">Expires: January 2, 2016</td>
+  <td class="left">Expires: April 3, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -543,7 +543,7 @@ ul.toc a:first-child {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 2, 2016.</p>
+<p>This Internet-Draft will expire on April 3, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -586,7 +586,7 @@ ul.toc a:first-child {
 <li>7.3.3.   <a href="#rfc.section.7.3.3">rs</a></li>
 </ul><li>7.4.   <a href="#rfc.section.7.4">The HTTP Encryption-Key Parameter Registry</a></li>
 <ul><li>7.4.1.   <a href="#rfc.section.7.4.1">keyid</a></li>
-<li>7.4.2.   <a href="#rfc.section.7.4.2">key</a></li>
+<li>7.4.2.   <a href="#rfc.section.7.4.2">aesgcm128</a></li>
 <li>7.4.3.   <a href="#rfc.section.7.4.3">dh</a></li>
 </ul></ul><li>8.   <a href="#rfc.references">References</a></li>
 <ul><li>8.1.   <a href="#rfc.references.1">Normative References</a></li>
@@ -687,8 +687,8 @@ ul.toc a:first-child {
 <dl>
   <dt>keyid:</dt>
   <dd style="margin-left: 8">The &#8220;keyid&#8221; parameter corresponds to the &#8220;keyid&#8221; parameter in the Encryption header field.</dd>
-  <dt>key:</dt>
-  <dd style="margin-left: 8">The &#8220;key&#8221; parameter contains the URL-safe base64 <a href="#RFC4648">[RFC4648]</a> octets of the input keying material.</dd>
+  <dt>aesgcm128:</dt>
+  <dd style="margin-left: 8">The &#8220;aesgcm128&#8221; parameter contains the URL-safe base64 <a href="#RFC4648">[RFC4648]</a> octets of the input keying material.</dd>
   <dt>dh:</dt>
   <dd style="margin-left: 8">The &#8220;dh&#8221; parameter contains an ephemeral Diffie-Hellman share. This form of the header field can be used to encrypt content for a specific recipient.</dd>
 </dl>
@@ -697,8 +697,8 @@ ul.toc a:first-child {
 <p id="rfc.section.4.p.6">Note that different methods for determining input keying material will produce different amounts of data.  The HKDF process ensures that the final content encryption key is the necessary size.</p>
 <p id="rfc.section.4.p.7">Alternative methods for determining input keying material MAY be defined by specifications that use this content-encoding.</p>
 <h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#explicit-key" id="explicit-key">Explicit Key</a></h1>
-<p id="rfc.section.4.1.p.1">The &#8220;key&#8221; parameter is decoded and used as the input keying material if present.  The &#8220;key&#8221; parameter MUST decode to at least 16 octets in order to be used as input keying material for &#8220;aesgcm128&#8221; content encoding.</p>
-<p id="rfc.section.4.1.p.2">Other key determination parameters can be ignored if the &#8220;key&#8221; parameter is present.</p>
+<p id="rfc.section.4.1.p.1">The &#8220;aesgcm128&#8221; parameter is decoded and used as the input keying material for the &#8220;aesgcm128&#8221; content encoding.  The &#8220;aesgcm128&#8221; parameter MUST decode to at least 16 octets in order to be used as input keying material for &#8220;aesgcm128&#8221; content encoding.</p>
+<p id="rfc.section.4.1.p.2">Other key determination parameters can be ignored if the &#8220;aesgcm128&#8221; parameter is present.</p>
 <h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#diffie-hellman" id="diffie-hellman">Diffie-Hellman</a></h1>
 <p id="rfc.section.4.2.p.1">The &#8220;dh&#8221; parameter is included to describe a Diffie-Hellman share, either modp (or finite field) Diffie-Hellman <a href="#DH">[DH]</a> or elliptic curve Diffie-Hellman (ECDH) <a href="#RFC4492">[RFC4492]</a>.</p>
 <p id="rfc.section.4.2.p.2">This share is combined with other information at the recipient to determine the HKDF input keying material.  In order for the exchange to be successful, the following information MUST be established out of band:</p>
@@ -758,7 +758,7 @@ HTTP/1.1 200 OK
 Content-Length: 32
 Content-Encoding: aesgcm128
 Encryption: keyid="a1"; salt="ibZx1RNz537h1XNkRcPpjA"
-Encryption-Key: keyid="a1"; key="9Z57YCb3dK95dSsdFJbkag"
+Encryption-Key: keyid="a1"; aesgcm128="9Z57YCb3dK95dSsdFJbkag"
 
 zK3kpG__Z8whjIkG6RYgPz11oUkTKcxPy9WP-VPMfuc
 </pre>
@@ -898,12 +898,12 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
   <li>Purpose: Identify the key that is in use.</li>
   <li>Reference: this document</li>
 </ul>
-<h1 id="rfc.section.7.4.2"><a href="#rfc.section.7.4.2">7.4.2.</a> <a href="#key" id="key">key</a></h1>
+<h1 id="rfc.section.7.4.2"><a href="#rfc.section.7.4.2">7.4.2.</a> <a href="#iana-ekey-aesgcm128" id="iana-ekey-aesgcm128">aesgcm128</a></h1>
 <p/>
 
 <ul>
-  <li>Parameter Name: key</li>
-  <li>Purpose: Provide an explicit input keying material value.</li>
+  <li>Parameter Name: aesgcm128</li>
+  <li>Purpose: Provide an explicit input keying material value for the aesgcm128 content encoding.</li>
   <li>Reference: this document</li>
 </ul>
 <h1 id="rfc.section.7.4.3"><a href="#rfc.section.7.4.3">7.4.3.</a> <a href="#dh" id="dh">dh</a></h1>
@@ -934,43 +934,43 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
       <td class="reference">
         <b id="RFC2119">[RFC2119]</b>
       </td>
-      <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997.</td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC4492">[RFC4492]</b>
       </td>
-      <td class="top"><a>Blake-Wilson, S.</a>, <a>Bolyard, N.</a>, <a>Gupta, V.</a>, <a>Hawk, C.</a> and <a>B. Moeller</a>, "<a href="http://tools.ietf.org/html/rfc4492">Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)</a>", RFC 4492, May 2006.</td>
+      <td class="top"><a>Blake-Wilson, S.</a>, <a>Bolyard, N.</a>, <a>Gupta, V.</a>, <a>Hawk, C.</a> and <a>B. Moeller</a>, "<a href="http://tools.ietf.org/html/rfc4492">Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)</a>", RFC 4492, DOI 10.17487/RFC4492, May 2006.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC4648">[RFC4648]</b>
       </td>
-      <td class="top"><a>Josefsson, S.</a>, "<a href="http://tools.ietf.org/html/rfc4648">The Base16, Base32, and Base64 Data Encodings</a>", RFC 4648, October 2006.</td>
+      <td class="top"><a>Josefsson, S.</a>, "<a href="http://tools.ietf.org/html/rfc4648">The Base16, Base32, and Base64 Data Encodings</a>", RFC 4648, DOI 10.17487/RFC4648, October 2006.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC5116">[RFC5116]</b>
       </td>
-      <td class="top"><a>McGrew, D.</a>, "<a href="http://tools.ietf.org/html/rfc5116">An Interface and Algorithms for Authenticated Encryption</a>", RFC 5116, January 2008.</td>
+      <td class="top"><a>McGrew, D.</a>, "<a href="http://tools.ietf.org/html/rfc5116">An Interface and Algorithms for Authenticated Encryption</a>", RFC 5116, DOI 10.17487/RFC5116, January 2008.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC5869">[RFC5869]</b>
       </td>
-      <td class="top"><a>Krawczyk, H.</a> and <a>P. Eronen</a>, "<a href="http://tools.ietf.org/html/rfc5869">HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</a>", RFC 5869, May 2010.</td>
+      <td class="top"><a>Krawczyk, H.</a> and <a>P. Eronen</a>, "<a href="http://tools.ietf.org/html/rfc5869">HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</a>", RFC 5869, DOI 10.17487/RFC5869, May 2010.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC7230">[RFC7230]</b>
       </td>
-      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, June 2014.</td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, DOI 10.17487/RFC7230, June 2014.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC7231">[RFC7231]</b>
       </td>
-      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>", RFC 7231, June 2014.</td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>", RFC 7231, DOI 10.17487/RFC7231, June 2014.</td>
     </tr>
   </tbody>
 </table>
@@ -987,49 +987,49 @@ BmuHqRzdD4W1mibxglrPiRHZRSY49Dzdm6jHrWXzZrE
       <td class="reference">
         <b id="RFC4880">[RFC4880]</b>
       </td>
-      <td class="top"><a>Callas, J.</a>, <a>Donnerhacke, L.</a>, <a>Finney, H.</a>, <a>Shaw, D.</a> and <a>R. Thayer</a>, "<a href="http://tools.ietf.org/html/rfc4880">OpenPGP Message Format</a>", RFC 4880, November 2007.</td>
+      <td class="top"><a>Callas, J.</a>, <a>Donnerhacke, L.</a>, <a>Finney, H.</a>, <a>Shaw, D.</a> and <a>R. Thayer</a>, "<a href="http://tools.ietf.org/html/rfc4880">OpenPGP Message Format</a>", RFC 4880, DOI 10.17487/RFC4880, November 2007.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC5226">[RFC5226]</b>
       </td>
-      <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, May 2008.</td>
+      <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, DOI 10.17487/RFC5226, May 2008.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC5246">[RFC5246]</b>
       </td>
-      <td class="top"><a>Dierks, T.</a> and <a>E. Rescorla</a>, "<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>", RFC 5246, August 2008.</td>
+      <td class="top"><a>Dierks, T.</a> and <a>E. Rescorla</a>, "<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>", RFC 5246, DOI 10.17487/RFC5246, August 2008.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC5652">[RFC5652]</b>
       </td>
-      <td class="top"><a>Housley, R.</a>, "<a href="http://tools.ietf.org/html/rfc5652">Cryptographic Message Syntax (CMS)</a>", STD 70, RFC 5652, September 2009.</td>
+      <td class="top"><a>Housley, R.</a>, "<a href="http://tools.ietf.org/html/rfc5652">Cryptographic Message Syntax (CMS)</a>", STD 70, RFC 5652, DOI 10.17487/RFC5652, September 2009.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC7233">[RFC7233]</b>
       </td>
-      <td class="top"><a>Fielding, R.</a>, <a>Lafon, Y.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7233">Hypertext Transfer Protocol (HTTP/1.1): Range Requests</a>", RFC 7233, June 2014.</td>
+      <td class="top"><a>Fielding, R.</a>, <a>Lafon, Y.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7233">Hypertext Transfer Protocol (HTTP/1.1): Range Requests</a>", RFC 7233, DOI 10.17487/RFC7233, June 2014.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC7235">[RFC7235]</b>
       </td>
-      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>", RFC 7235, June 2014.</td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>", RFC 7235, DOI 10.17487/RFC7235, June 2014.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC7516">[RFC7516]</b>
       </td>
-      <td class="top"><a>Jones, M.</a> and <a>J. Hildebrand</a>, "<a href="http://tools.ietf.org/html/rfc7516">JSON Web Encryption (JWE)</a>", RFC 7516, May 2015.</td>
+      <td class="top"><a>Jones, M.</a> and <a>J. Hildebrand</a>, "<a href="http://tools.ietf.org/html/rfc7516">JSON Web Encryption (JWE)</a>", RFC 7516, DOI 10.17487/RFC7516, May 2015.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC7540">[RFC7540]</b>
       </td>
-      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/rfc7540">Hypertext Transfer Protocol Version 2 (HTTP/2)</a>", RFC 7540, May 2015.</td>
+      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/rfc7540">Hypertext Transfer Protocol Version 2 (HTTP/2)</a>", RFC 7540, DOI 10.17487/RFC7540, May 2015.</td>
     </tr>
     <tr>
       <td class="reference">
