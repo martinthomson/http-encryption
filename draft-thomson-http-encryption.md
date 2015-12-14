@@ -817,7 +817,7 @@ Serialization as:
 
 ~~~
 eyAiYWxnIjogImRpciIsICJlbmMiOiAiQTEyOEdDTSIgfQ..AAAAAAAAAAAAAAAA.
-LwTC-fwdKh8de0smD2jfzA.eh1vURhu65M2lxhctbbntA
+fuag8ThIRIazSHKUqJ5Odg.5HvlSARS4zvonxQXBp0S-A
 ~~~
 
 Where the first line represents the fixed JWE Protected Header, JWE Encrypted
