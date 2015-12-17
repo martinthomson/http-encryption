@@ -313,7 +313,7 @@ ol, ul {
 
   <meta name="dct.creator" content="Thomson, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-http-encryption-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-12-14" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-12-17" />
   <meta name="dct.abstract" content="This memo introduces a content-coding for HTTP that allows message payloads to be encrypted." />
   <meta name="description" content="This memo introduces a content-coding for HTTP that allows message payloads to be encrypted." />
 
@@ -334,10 +334,10 @@ ol, ul {
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
-  <td class="right">December 14, 2015</td>
+  <td class="right">December 17, 2015</td>
 </tr>
 <tr>
-  <td class="left">Expires: June 16, 2016</td>
+  <td class="left">Expires: June 19, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -358,7 +358,7 @@ ol, ul {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 16, 2016.</p>
+<p>This Internet-Draft will expire on June 19, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -459,8 +459,9 @@ ol, ul {
   encryption_params = [ parameter *( ";" parameter ) ]
 </pre>
 <p id="rfc.section.3.p.3">If the payload is encrypted more than once (as reflected by having multiple content-codings that imply encryption), each application of the content encoding is reflected in the Encryption header field, in the order in which they were applied.</p>
-<p id="rfc.section.3.p.4">The Encryption header MAY be omitted if the sender does not intend for the immediate recipient to be able to decrypt the payload body.  Alternatively, the Encryption header field MAY be omitted if the sender intends for the recipient to acquire the header field by other means.</p>
-<p id="rfc.section.3.p.5">Servers processing PUT requests MUST persist the value of the Encryption header field, unless they remove the content-coding by decrypting the payload.</p>
+<p id="rfc.section.3.p.4">Encryption header field values with multiple instances of the same parameter name are invalid.</p>
+<p id="rfc.section.3.p.5">The Encryption header MAY be omitted if the sender does not intend for the immediate recipient to be able to decrypt the payload body.  Alternatively, the Encryption header field MAY be omitted if the sender intends for the recipient to acquire the header field by other means.</p>
+<p id="rfc.section.3.p.6">Servers processing PUT requests MUST persist the value of the Encryption header field, unless they remove the content-coding by decrypting the payload.</p>
 <h2 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#encryption-header-field-parameters" id="encryption-header-field-parameters">Encryption Header Field Parameters</a></h2>
 <p id="rfc.section.3.1.p.1">The following parameters are used in determining the content encryption key that is used for encryption:</p>
 <p/>
@@ -518,10 +519,11 @@ ol, ul {
   <dt>dh:</dt>
   <dd style="margin-left: 8">The &#8220;dh&#8221; parameter contains an ephemeral Diffie-Hellman share. This form of the header field can be used to encrypt content for a specific recipient.</dd>
 </dl>
-<p id="rfc.section.4.p.4">The input keying material used by the key derivation (see <a href="#derivation">Section 3.2</a>) can be determined based on the information in the Crypto-Key header field.  The method for key derivation depends on the parameters that are present in the header field.</p>
-<p id="rfc.section.4.p.5">The value or values provided in the Crypto-Key header field is valid only for the current HTTP message unless additional information indicates a greater scope.</p>
-<p id="rfc.section.4.p.6">Note that different methods for determining input keying material will produce different amounts of data.  The HKDF process ensures that the final content encryption key is the necessary size.</p>
-<p id="rfc.section.4.p.7">Alternative methods for determining input keying material MAY be defined by specifications that use this content-encoding.</p>
+<p id="rfc.section.4.p.4">Crypto-Key header field values with multiple instances of the same parameter name are invalid.</p>
+<p id="rfc.section.4.p.5">The input keying material used by the key derivation (see <a href="#derivation">Section 3.2</a>) can be determined based on the information in the Crypto-Key header field.  The method for key derivation depends on the parameters that are present in the header field.</p>
+<p id="rfc.section.4.p.6">The value or values provided in the Crypto-Key header field is valid only for the current HTTP message unless additional information indicates a greater scope.</p>
+<p id="rfc.section.4.p.7">Note that different methods for determining input keying material will produce different amounts of data.  The HKDF process ensures that the final content encryption key is the necessary size.</p>
+<p id="rfc.section.4.p.8">Alternative methods for determining input keying material MAY be defined by specifications that use this content-encoding.</p>
 <h2 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#explicit-key" id="explicit-key">Explicit Key</a></h2>
 <p id="rfc.section.4.1.p.1">The &#8220;aesgcm128&#8221; parameter is decoded and used as the input keying material for the &#8220;aesgcm128&#8221; content encoding.  The &#8220;aesgcm128&#8221; parameter MUST decode to at least 16 octets in order to be used as input keying material for &#8220;aesgcm128&#8221; content encoding.</p>
 <p id="rfc.section.4.1.p.2">Other key determination parameters can be ignored if the &#8220;aesgcm128&#8221; parameter is present.</p>
