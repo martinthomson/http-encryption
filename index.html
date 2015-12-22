@@ -475,7 +475,7 @@ ol, ul {
   <dd style="margin-left: 8">The &#8220;rs&#8221; parameter contains a positive decimal integer that describes the record size in octets.  This value MUST be greater than 1.  If the &#8220;rs&#8221; parameter is absent, the record size defaults to 4096 octets.</dd>
 </dl>
 <h2 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#derivation" id="derivation">Content Encryption Key Derivation</a></h2>
-<p id="rfc.section.3.2.p.1">In order to allow the reuse of keying material for multiple different HTTP messages, a content encryption key is derived for each message.  The content encryption key is derived from the decoded value of the &#8220;salt&#8221; parameter using the HMAC-based key derivation function (HKDF) described in <a href="#RFC5869">[RFC5869]</a> using the SHA-256 hash algorithm [FIPS180-2].</p>
+<p id="rfc.section.3.2.p.1">In order to allow the reuse of keying material for multiple different HTTP messages, a content encryption key is derived for each message.  The content encryption key is derived from the decoded value of the &#8220;salt&#8221; parameter using the HMAC-based key derivation function (HKDF) described in <a href="#RFC5869">[RFC5869]</a> using the SHA-256 hash algorithm <a href="#FIPS180-4">[FIPS180-4]</a>.</p>
 <p id="rfc.section.3.2.p.2">The decoded value of the &#8220;salt&#8221; parameter is the salt input to HKDF function.  The keying material identified by the &#8220;keyid&#8221; parameter is the input keying material (IKM) to HKDF.  Input keying material can either be prearranged, or can be described using the Crypto-Key header field (<a href="#crypto-key">Section 4</a>).  The first step of HKDF is therefore:</p>
 <pre>
    PRK = HMAC-SHA-256(salt, IKM)
