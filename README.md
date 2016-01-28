@@ -1,9 +1,11 @@
 # Encrypted Content-Encoding for HTTP
 
+This work has been adopted by the HTTP working group.  The most recent version of the draft can be found at https://github.com/httpwg/http-extensions.
+
 This is the working area for the Individual internet-draft, "Encrypted Content-Encoding for HTTP".
 
-* [Editor's copy](https://martinthomson.github.io/http-encryption/)
-* [Individual Draft] (https://tools.ietf.org/html/draft-thomson-http-encryption)
+* [Editor's copy](https://httpwg.github.io/http-extensions/draft-ietf-httpbis-encryption-encoding.html)
+* [Individual Draft] (https://tools.ietf.org/html/draft-ietf-httpbis-encryption-encoding)
 
 
 ## Contributing
