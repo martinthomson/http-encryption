@@ -2,7 +2,7 @@
 title: Encrypted Content-Encoding for HTTP
 abbrev: HTTP encryption coding
 docname: draft-thomson-http-encryption-latest
-date: 2015
+date: 2016
 category: std
 
 ipr: trust200902
