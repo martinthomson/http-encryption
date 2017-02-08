@@ -4,8 +4,8 @@
 
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
-Intended status: Standards Track                                    2015
-Expires: October 16, 2016
+Intended status: Standards Track                       February 08, 2017
+Expires: August 12, 2017
 
 
                   Encrypted Content-Encoding for HTTP
@@ -31,11 +31,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 16, 2016.
+   This Internet-Draft will expire on August 12, 2017.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2017 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson                 Expires October 16, 2016                [Page 1]
+Thomson                  Expires August 12, 2017                [Page 1]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson                 Expires October 16, 2016                [Page 2]
+Thomson                  Expires August 12, 2017                [Page 2]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    For example, it might be necessary to store a file on a server
@@ -165,9 +165,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016                [Page 3]
+Thomson                  Expires August 12, 2017                [Page 3]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    Key header field (Section 4) can be included to describe how the
@@ -221,9 +221,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016                [Page 4]
+Thomson                  Expires August 12, 2017                [Page 4]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    The nonce for each record is a 96-bit value constructed from the
@@ -277,9 +277,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016                [Page 5]
+Thomson                  Expires August 12, 2017                [Page 5]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    Servers processing PUT requests MUST persist the value of the
@@ -333,9 +333,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016                [Page 6]
+Thomson                  Expires August 12, 2017                [Page 6]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    The info parameter to HKDF is set to the ASCII-encoded string
@@ -389,9 +389,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016                [Page 7]
+Thomson                  Expires August 12, 2017                [Page 7]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 4.  Crypto-Key Header Field
@@ -445,9 +445,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016                [Page 8]
+Thomson                  Expires August 12, 2017                [Page 8]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    Other key determination parameters can be ignored if the "aesgcm128"
@@ -501,9 +501,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016                [Page 9]
+Thomson                  Expires August 12, 2017                [Page 9]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    The two length fields are encoded as a two octet unsigned integer in
@@ -557,9 +557,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 10]
+Thomson                  Expires August 12, 2017               [Page 10]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 5.  Examples
@@ -613,9 +613,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 11]
+Thomson                  Expires August 12, 2017               [Page 11]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 5.4.  Encryption with Explicit Key
@@ -669,9 +669,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 12]
+Thomson                  Expires August 12, 2017               [Page 12]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 6.  Security Considerations
@@ -725,9 +725,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 13]
+Thomson                  Expires August 12, 2017               [Page 13]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 6.3.  Leaking Information in Headers
@@ -781,9 +781,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 14]
+Thomson                  Expires August 12, 2017               [Page 14]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    segments and storing the separately might reduce exposure.  HTTP/2
@@ -837,9 +837,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 15]
+Thomson                  Expires August 12, 2017               [Page 15]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 7.3.  The HTTP Encryption Parameter Registry
@@ -893,9 +893,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 16]
+Thomson                  Expires August 12, 2017               [Page 16]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 7.4.  The HTTP Crypto-Key Parameter Registry
@@ -949,9 +949,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 17]
+Thomson                  Expires August 12, 2017               [Page 17]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 8.  References
@@ -1005,9 +1005,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 18]
+Thomson                  Expires August 12, 2017               [Page 18]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
 8.2.  Informative References
@@ -1061,9 +1061,9 @@ Internet-Draft           HTTP encryption coding                     2015
 
 
 
-Thomson                 Expires October 16, 2016               [Page 19]
+Thomson                  Expires August 12, 2017               [Page 19]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    [XMLENC]   Eastlake, D., Reagle, J., Imamura, T., Dillaway, B., and
@@ -1117,9 +1117,9 @@ Appendix B.  Acknowledgements
 
 
 
-Thomson                 Expires October 16, 2016               [Page 20]
+Thomson                  Expires August 12, 2017               [Page 20]
 
-Internet-Draft           HTTP encryption coding                     2015
+Internet-Draft           HTTP encryption coding            February 2017
 
 
    The following people provided valuable input: Richard Barnes, David
@@ -1173,4 +1173,4 @@ Author's Address
 
 
 
-Thomson                 Expires October 16, 2016               [Page 21]
+Thomson                  Expires August 12, 2017               [Page 21]
