@@ -19,4 +19,9 @@ install:
  - if head -1 -q *.md | grep '^\-\-\-' >/dev/null 2>&1; then gem install --no-doc kramdown-rfc2629; fi
  - if head -1 -q *.md | grep '^%%%' >/dev/null 2>&1; then go get "$mmark_src" && go build "$mmark_src"; fi
 
-script: make ghpages
+script:
+ - make ghpages
+ - git symbolic-ref --short HEAD -q || git rev-parse --short HEAD
+ - git symbolic-ref --short HEAD || true
+ - git rev-parse --abbrev-ref HEAD || true
+ - git rev-parse --short HEAD || true
