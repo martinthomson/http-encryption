@@ -25,3 +25,4 @@ script:
  - git symbolic-ref --short HEAD || true
  - git rev-parse --abbrev-ref HEAD || true
  - git rev-parse --short HEAD || true
+ - git branch || true
